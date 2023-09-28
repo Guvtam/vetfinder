@@ -1,0 +1,42 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+  <h1>Detalles del Servicio: {{ servicio.nombre }}</h1>
+  
+  <p>Categoría: {{ servicio.categoria }}</p>
+  <p>Dirección: {{ servicio.direccion }}</p>
+  <p>Teléfono: {{ servicio.telefono }}</p>
+  <p>Horario: {{ servicio.horario }}</p>
+  <p>Descripción: {{ servicio.descripcion }}</p>
+  <p>Sitio Web: <a href="{{ servicio.sitio_web }}">{{ servicio.sitio_web }}</a></p>
+
+  <!-- Mostrar calificación promedio -->
+  <p>Calificación Promedio: {{ servicio.calificacion_promedio }}</p>
+  <!-- Mostrar total de reseñas -->
+  <p>Total de Reseñas: {{ servicio.total_resenas }}</p>
+
+  <!-- Formulario para agregar una nueva reseña -->
+  <h2>Deja una Reseña</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar Reseña</button>
+  </form>
+
+  <!-- Mostrar las reseñas existentes -->
+  <h2>Reseñas</h2>
+  <ul>
+    {% for resena in servicio.resena_set.all %}
+      <li>
+        <p>Usuario: {{ resena.usuario }}</p>
+        <p>Calificación: {{ resena.calificacion }} Estrella(s)</p>
+        <p>Comentario: {{ resena.comentario }}</p>
+        <p>Fecha: {{ resena.fecha_creacion }}</p>
+      </li>
+    {% empty %}
+      <li>No hay reseñas disponibles.</li>
+    {% endfor %}
+  </ul>
+  
+  <a href="{% url 'listar_servicios' %}">Volver a la lista de servicios</a>
+{% endblock %}

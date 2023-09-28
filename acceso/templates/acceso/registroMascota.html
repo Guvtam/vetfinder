@@ -1,0 +1,17 @@
+{% extends 'home/base.html' %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <h1>Registro Mascota</h1>
+    
+    <form method="post" class="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+    
+</div>
+{% endblock %}
