@@ -1,42 +1,44 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-  <h1>Detalles del Servicio: {{ servicio.nombre }}</h1>
+<h1>Detalles del Servicio</h1>
+
+<div class="card">
+    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
+    <div class="card-body">
+        <h5 class="card-title">{{ servicio.nombre }}</h5>
+        <p class="card-text">Categoría: {{ servicio.categoria }}</p>
+        <p class="card-text">Dirección: {{ servicio.direccion }}</p>
+        <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
+        <p class="card-text">Horario: {{ servicio.horario }}</p>
+        <p class="card-text">Descripción: {{ servicio.descripcion }}</p>
+        <p class="card-text">Sitio web: <a href="{{ servicio.sitio_web }}" target="_blank">{{ servicio.sitio_web }}</a></p>
+        
+    </div>
+</div>
+
+<h2>Calificaciones y Comentarios</h2>
+            <ul>
+                {% for calificacion in calificaciones %}
+                    <li>
+                        <p>Calificación: {{ calificacion.calificacion }}</p>
+                        <p>Comentario: {{ calificacion.comentario }}</p>
+                        <p>Por: {{ calificacion.usuario.username }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if user.is_authenticated %}
+                <h2>Deja tu Calificación</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Enviar Calificación</button>
+                </form>
+            {% else %}
+                <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
+            {% endif %}
+       
   
-  <p>Categoría: {{ servicio.categoria }}</p>
-  <p>Dirección: {{ servicio.direccion }}</p>
-  <p>Teléfono: {{ servicio.telefono }}</p>
-  <p>Horario: {{ servicio.horario }}</p>
-  <p>Descripción: {{ servicio.descripcion }}</p>
-  <p>Sitio Web: <a href="{{ servicio.sitio_web }}">{{ servicio.sitio_web }}</a></p>
-
-  <!-- Mostrar calificación promedio -->
-  <p>Calificación Promedio: {{ servicio.calificacion_promedio }}</p>
-  <!-- Mostrar total de reseñas -->
-  <p>Total de Reseñas: {{ servicio.total_resenas }}</p>
-
-  <!-- Formulario para agregar una nueva reseña -->
-  <h2>Deja una Reseña</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Enviar Reseña</button>
-  </form>
-
-  <!-- Mostrar las reseñas existentes -->
-  <h2>Reseñas</h2>
-  <ul>
-    {% for resena in servicio.resena_set.all %}
-      <li>
-        <p>Usuario: {{ resena.usuario }}</p>
-        <p>Calificación: {{ resena.calificacion }} Estrella(s)</p>
-        <p>Comentario: {{ resena.comentario }}</p>
-        <p>Fecha: {{ resena.fecha_creacion }}</p>
-      </li>
-    {% empty %}
-      <li>No hay reseñas disponibles.</li>
-    {% endfor %}
-  </ul>
-  
-  <a href="{% url 'listar_servicios' %}">Volver a la lista de servicios</a>
+  <a href="{% url 'servicios' %}">Volver a la lista de servicios</a>
 {% endblock %}

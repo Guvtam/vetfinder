@@ -24,7 +24,7 @@ class Mascota(models.Model):
     genero_mascota = models.CharField(max_length=20, choices=[('Macho', 'Macho'), ('Hembra', 'Hembra')])
     color = models.CharField(max_length=100, blank=True)
     historial_medico = models.TextField(blank=True)
-    imagen = models.ImageField(upload_to='mascotas/', blank=True)
+    imagen = models.ImageField(upload_to='mascotas_img/', blank=True)
     identificacion = models.CharField(max_length=50, blank=True)
     vacunacion = models.TextField(blank=True)
     comportamiento = models.TextField(blank=True)
