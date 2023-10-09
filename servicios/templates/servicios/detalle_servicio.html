@@ -1,44 +1,45 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<h1>Detalles del Servicio</h1>
+    <h1>Servicios</h1>
 
-<div class="card">
-    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
-    <div class="card-body">
-        <h5 class="card-title">{{ servicio.nombre }}</h5>
-        <p class="card-text">Categoría: {{ servicio.categoria }}</p>
-        <p class="card-text">Dirección: {{ servicio.direccion }}</p>
-        <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
-        <p class="card-text">Horario: {{ servicio.horario }}</p>
-        <p class="card-text">Descripción: {{ servicio.descripcion }}</p>
-        <p class="card-text">Sitio web: <a href="{{ servicio.sitio_web }}" target="_blank">{{ servicio.sitio_web }}</a></p>
-        
+    <div class="text-center" style="width: 70%;">
+        <form method="get" action="{% url 'buscar_servicio' %}">
+            <input type="text" name="q" placeholder="Buscar por nombre">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
     </div>
-</div>
 
-<h2>Calificaciones y Comentarios</h2>
-            <ul>
-                {% for calificacion in calificaciones %}
-                    <li>
-                        <p>Calificación: {{ calificacion.calificacion }}</p>
-                        <p>Comentario: {{ calificacion.comentario }}</p>
-                        <p>Por: {{ calificacion.usuario.username }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            {% if user.is_authenticated %}
-                <h2>Deja tu Calificación</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Enviar Calificación</button>
-                </form>
-            {% else %}
-                <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
-            {% endif %}
-       
-  
-  <a href="{% url 'servicios' %}">Volver a la lista de servicios</a>
+    <div class="row">
+        {% for servicio in servicios %}
+        <div class="col-md-4">
+            <div class="card">
+                <a href="{% url 'detalle_servicio' servicio.id %}">
+                    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ servicio.nombre }}</h5>
+                        <p class="card-text">Categoría: {{ servicio.categoria }}</p>
+                        <p class="card-text">Dirección: {{ servicio.direccion }}</p>
+                        <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
+                        <p class="card-text">Teléfono: {{ servicio.horario }}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- IFRAME de Google Maps -->
+            <iframe
+              width="600"
+              height="400"
+              style="border:0"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCZAz4KOLAfJydXhn9D4nSS3R-Z5AAYBOo
+                &q=Space+Needle,Seattle+WA">
+            </iframe>
+        </div>
+    </div>
+        {% endfor %}
+    </div>
 {% endblock %}
