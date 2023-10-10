@@ -2,5 +2,17 @@
 
 {% block content %}
 
-    <h1>Mi Mascota</h1>
+    <div class="container">
+        <h1 class="text-center">Mi Mascota</h1>
+        {% if mascota.imagen %}
+        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+    {% else %}
+        <p>Esta mascota no tiene una imagen registrada.</p>
+    {% endif %}
+        <h3>Mi Mascota: {{ mascota.nombre }}</h1>
+        <p>Especie: {{ mascota.especie }}</p>
+    </div>
+
+        
+    </div>
 {% endblock %}

@@ -25,6 +25,7 @@ class Servicio(models.Model):
     imagen = models.ImageField(upload_to='servicios_img/', blank=True)
     calificacion_promedio = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
     total_reseñas = models.PositiveIntegerField(default=0)
+    usuario=models.ForeignKey(DuenoMascota,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre
@@ -38,3 +39,4 @@ class Calificacion(models.Model):
 
     def __str__(self):
         return f"Calificación de {self.servicio.nombre} por {self.usuario.username}"
+    

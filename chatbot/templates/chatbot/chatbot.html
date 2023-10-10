@@ -1,0 +1,17 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<h1>Haz tus consultas</h1>
+<form method="POST" style="background-color: gray; padding:10%">
+    {% csrf_token %}
+    <input type="text" class="form-control" name="user_input">
+    <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+</form>
+
+{% if response %}
+    <div>
+        {{ response|safe }}
+    </div>
+{% endif%}
+
+{% endblock %}

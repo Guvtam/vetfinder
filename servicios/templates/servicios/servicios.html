@@ -2,13 +2,26 @@
 
 {% block content %}
     <h1>Servicios</h1>
-
+    <div class="text-center" style="width: 70%; background-color:grey">
+        <form method="get" action="{% url 'buscar_servicio' %}">
+            {{ form.query.label_tag }}
+            {{ form.query }}
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        <br>
+    </div>
+<!--
     <div class="text-center" style="width: 70%;">
         <form method="get" action="{% url 'buscar_servicio' %}">
+            {{ form.query.label_tag }}
+            {{ form.query }}
+           
             <input type="text" name="q" placeholder="Buscar por nombre">
+          
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
     </div>
+-->
 
     <div class="row">
         {% for servicio in servicios %}

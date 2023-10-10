@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'servicios',
     'perfil',
+    'chatbot',
+    'captcha',
+    
     
 ]
 
@@ -156,4 +159,6 @@ if DEBUG:
     
 
 
-
+# Claves de sitio y secreta de reCAPTCHA
+RECAPTCHA_PUBLIC_KEY = '6LfLh3woAAAAAKwkTS5aeadmXwA-9MsHfSPPaaAO' #'6LeoyXIoAAAAALAX7ps7aehzxamw5hHcgoUqazlx'
+RECAPTCHA_PRIVATE_KEY = '6LfLh3woAAAAADll8UN--SD3eblx3-2Rf4JvmOem' #'6LeoyXIoAAAAAIPhYaDA2a_e4dIKP_gBrzYAAkY3'

@@ -13,8 +13,11 @@
   <link rel="icon" href="#" type="image/png">
   <!--Titulo-->
   <title>VetFinder {% block title %} {% endblock%}</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/home/css/estilos.css' %}">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj_b8ElgBESWOc6hvO6bDIGCfaXVDIpiE"></script>
+  
+  
+
 
 </head>
 
@@ -28,37 +31,68 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Mascotas</a></li>
-          <li><a href="{% url 'servicios' %}" class="nav-link px-2 text-white">Servicios</a></li>
-          <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">Cuidados y Recomendaciones</a></li>
-          <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white">Contacto</a></li>
+          <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">HOME</a></li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle px-2 text-white" id="serviciosDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                SERVICIOS
+            </a>
+            <div class="dropdown-menu" aria-labelledby="serviciosDropdown">
+                <a class="dropdown-item" href="#">LOCALIZA TU SERVICIO</a>
+                <a class="dropdown-item" href="{% url 'servicios' %}">ENCUENTRA TU SERVICIO</a>
+            </div>
+        </li>
+          
+          <li><a href="{% url 'chatbot' %}" class="nav-link px-2 text-white">CUIDADOS Y RECOMENDACIONES</a></li>
+          <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white">CONTACTO</a></li>
         </ul>
-
-       
 
         
 
         {% if user.is_authenticated %}
         <div class="dropdown text-end">
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle btn btn-warning me-2" data-bs-toggle="dropdown" aria-expanded="false">
-           Menú
+            Hola {{ user.username }}
           </a>
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="{% url 'mi_perfil' %}">Mi Perfil</a></li>
+            {% if user.is_superuser %}
+                <!-- Mostrar todos los enlaces para superusuarios -->
+                <li><a class="dropdown-item" href="{% url 'mi_mascota' %}">Mi Mascota</a></li>
+                <li><a class="dropdown-item" href="{% url 'agregar_mascota' %}">Agregar Mascota</a></li>
+                <li><a class="dropdown-item" href="{% url 'registrar_servicio' %}">Agregar Servicio</a></li>
+                <li><a class="dropdown-item" href="{% url 'mis_servicios' %}">Mis Servicios</a></li>
+            {% elif tipo_usuario == 'dueno' %}
             <li><a class="dropdown-item" href="{% url 'mi_mascota' %}">Mi Mascota</a></li>
-            <li><a class="dropdown-item" href="{% url 'agregar_mascota' %}">Agregar nueva mascota</a></li>
+            <li><a class="dropdown-item" href="{% url 'agregar_mascota' %}">Agregar Mascota</a></li>
+        {% elif tipo_usuario == 'servicios' %}
+            <li><a class="dropdown-item" href="{% url 'registrar_servicio' %}">Agregar Servicio</a></li>
+            <li><a class="dropdown-item" href="{% url 'mis_servicios' %}">Mis Servicios</a></li>
+        {% endif %}
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
           </ul>
         </div>
+        
         {% else %}
-        <div class="text-end">
+        <div class="text-end d-flex">
           <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Login</a>
-          <a  href="{% url 'signup' %}" class="btn btn-warning me-2">Sign-up</a>
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle btn btn-warning me-2" data-bs-toggle="dropdown" aria-expanded="false">
+              Sign-up
+            </a>
+            <ul class="dropdown-menu text-small">
+              <li><a class="dropdown-item" href="{% url 'signup' %}">Registrate</a></li>
+              <li><hr class="dropdown-divider"></li>
+             
+              
+            </ul>
+          </div>
+          
         </div>
-
+        
         {% endif %}
+
+        
         
       </div>
     </div>
@@ -72,11 +106,12 @@
 
       {% endblock %}
   </main>
-  <footer style=" background-color: black;  color: white;">
+  <footer class="p-3 text-bg-dark text-center" >
     <p>&copy; 2023 VetFinder</p>
   </footer>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
