@@ -4,12 +4,13 @@
 
 {% block content %}
 
-
-<div class="container " style="background-color:grey">
+<div id="registro">
+        
+<div class="container "  id="form-registro">
     <h1 class="text-center">Registro de Usuario</h1>
 
     
-      <form method="post" style="width:70%; margin:auto" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% if form.errors %}
         <div>
@@ -52,7 +53,7 @@
             <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
             {{ form.telefono }}
         </div>
-        
+        <!--
         <div class="form-group">
             <label for="{{ form.direccion.id_for_label }}">Dirección:</label>
             {{ form.direccion }}
@@ -67,7 +68,7 @@
             <label for="{{ form.genero.id_for_label }}">Género:</label>
             {{ form.genero }}
         </div>
-        
+        -->
         <div class="form-group">
             <label for="{{ form.imagen_perfil.id_for_label }}">Imagen de perfil:</label>
             {{ form.imagen_perfil }}
@@ -88,6 +89,7 @@
             <label for="{{ form.captcha.id_for_label }}">Captcha:</label>
             {{ form.captcha }}
         </div>
+        <br>
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Registrarse</button>
         </div>
@@ -99,6 +101,7 @@
     
    
 
+</div>
 </div>
 
 

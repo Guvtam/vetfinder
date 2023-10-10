@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div id="editar-perfil">
+    <div class="container mt-5" id="form-editar-perfil">
+        <h1 class="text-center">Editar Perfil</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

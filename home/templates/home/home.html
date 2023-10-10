@@ -1,6 +1,16 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <h1>home</h1>
-    <p>bienvenido a nuestra web para dueños de mascotas</p>
+    
+    <div  id="home">
+        <h1 id="titulo">Bienvenido a VETFINDER </h1>
+        <p id="parrafo-index">La mejor web para las necesidades de tu mascota.</p>
+        {% if not user.is_authenticated %}
+        <div id="botones-index">
+            <a href="{% url 'signup' %}" class="btn btn-outline-light">Registrate</a>
+            <a href="{% url 'login' %}" class="btn btn-primary">Inicia Sesión</a>
+        </div>
+        {% endif %}
+    </div>
+    
 {% endblock %}

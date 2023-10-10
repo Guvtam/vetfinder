@@ -1,44 +1,45 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <h1>Servicios</h1>
-    <div class="text-center" style="width: 70%; background-color:grey">
-        <form method="get" action="{% url 'buscar_servicio' %}">
-            {{ form.query.label_tag }}
-            {{ form.query }}
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
-        <br>
-    </div>
-<!--
-    <div class="text-center" style="width: 70%;">
-        <form method="get" action="{% url 'buscar_servicio' %}">
-            {{ form.query.label_tag }}
-            {{ form.query }}
-           
-            <input type="text" name="q" placeholder="Buscar por nombre">
-          
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
-    </div>
--->
-
-    <div class="row">
-        {% for servicio in servicios %}
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a href="{% url 'detalle_servicio' servicio.id %}">
-                    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ servicio.nombre }}</h5>
-                        <p class="card-text">Categoría: {{ servicio.categoria }}</p>
-                        <p class="card-text">Dirección: {{ servicio.direccion }}</p>
-                        <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
-                        <p class="card-text">Teléfono: {{ servicio.horario }}</p>
-                    </div>
-                </a>
-            </div>
+    <div id="servicios">
+        <h1 class="text-center">Servicios</h1>
+        <p>Aquí encontrarás los servicios que tu mascota necesita.</p>
+        {% if request.user.is_authenticated %}
+        <!-- Este contenido solo se muestra a usuarios autenticados -->
+        <div class="text-center">
+            <form method="get" action="{% url 'buscar_servicio' %}">
+                {{ form.query.label_tag }}
+                {{ form.query }}
+                {{ form.categoria.label_tag }}
+                {{ form.categoria }}
+                {{ form.calificacion.label_tag }}
+                {{ form.calificacion }}
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+            <br>
         </div>
-        {% endfor %}
+
+        <div class="row">
+            {% for servicio in servicios %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100" style="width: 18rem; margin:auto;">
+                    <a href="{% url 'detalle_servicio' servicio.id %}" style="text-decoration: none; ">
+                        <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ servicio.nombre }}</h5>
+                            <p class="card-text">Dirección: {{ servicio.direccion }}</p>
+                            <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
+                            <p class="card-text">Horario: {{ servicio.horario }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <!-- Este contenido se muestra a usuarios no autenticados -->
+        <p>Por favor, inicia sesión para acceder a nuestro contenido.</p>
+        {% endif %}
     </div>
 {% endblock %}

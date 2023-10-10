@@ -32,8 +32,18 @@ def registrar_servicio(request):
 
 def ver_servicio(request):
     servicios = Servicio.objects.all()
-    form = BusquedaForm()  
-    return render(request, 'servicios/servicios.html', {'servicios': servicios, 'form': form})
+    form = BusquedaForm()
+    # Inicializa tipo_usuario como None por defecto
+    tipo_usuario = None
+    # Verifica si el usuario está autenticado
+    if request.user.is_authenticated:
+        # Recupera el tipo de usuario asociado al usuario actual
+        try:
+            tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
+            tipo_usuario = tipo_usuario_obj.tipo_usuario
+        except TipoUsuario.DoesNotExist:
+            tipo_usuario = None
+    return render(request, 'servicios/servicios.html', {'servicios': servicios, 'form': form, 'tipo_usuario': tipo_usuario})
 
 
 def detalle_servicio(request,id):
@@ -51,21 +61,34 @@ def detalle_servicio(request,id):
         form = CalificacionForm()
     return render(request, 'servicios/detalle_servicio.html', {'servicio': servicio, 'calificaciones': calificaciones, 'form': form})
 
-class BuscarServiciosView(ListView):
-    model = Servicio
-    template_name = 'servicios/servicios.html'
-    context_object_name = 'servicios'
-    paginate_by = 10
+      
 
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query:
-            return Servicio.objects.filter(nombre__icontains=query)
-        else:
-            return Servicio.objects.all()
+
+
+def buscar_servicio(request):
+    servicios = Servicio.objects.all()
+    form = BusquedaForm(request.GET)
+    
+    if form.is_valid():
+        query = form.cleaned_data.get('query')
+        categoria = form.cleaned_data.get('categoria')
+        calificacion = form.cleaned_data.get('calificacion')
         
-
-
+        if query:
+            servicios = servicios.filter(nombre__icontains=query)
+        
+        if categoria:
+            servicios = servicios.filter(categoria=categoria)
+        
+        if calificacion:
+            calificacion_int = int(calificacion)
+            servicios = servicios.filter(calificacion__calificacion=calificacion_int)
+        
+        # Limpiar los parámetros de la URL de consulta
+        request.GET = request.GET.copy()
+        request.GET.clear()
+    
+    return render(request, 'servicios/servicios.html', {'servicios': servicios, 'form': form})
 
 
 

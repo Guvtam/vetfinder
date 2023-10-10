@@ -1,0 +1,173 @@
+/* styles.css */
+#home {
+    background-image: url("../img/mascotas_index.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#titulo {
+    text-align: center;
+    font-size: 60px;
+    color: white;
+    padding-top: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+#parrafo-index{
+    color: black;
+    font-size: 30px;
+    text-align: left;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#botones-index{
+    font-size: 24px; /* Tamaño de fuente para los botones */
+    margin: 10px; /* Espacio entre los botones */
+    text-decoration: none;
+}
+
+#registro{
+    background-image: url("../img/mascota_registroUs.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#form-registro{
+    width: 40%;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+#login{
+    background-image: url("../img/mascota_login.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#login-form{
+    width: 35%;
+    padding: 30px;  
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+#mascota-registro{
+    background-image: url("../img/mascota_login.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#form-mascota{
+    width: 35%;
+    padding: 30px;  
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+#servicio-registro{
+    background-image: url("../img/servicio.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#form-servicio{
+    width: 35%;
+    padding: 30px;  
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+#editar-perfil{
+    background-image: url("../img/servicio.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#form-editar-perfil{
+    width: 35%;
+    padding: 30px;  
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+#chat{
+    background-image: url("../img/mascota.jpg");
+    margin: 0;
+    padding: 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+
+#form-chat{
+    width: 35%;
+    padding: 30px;  
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+
+#servicios, #contacto, #tipo-usuario, #detalle{
+    background-color: rgb(241, 115, 189);
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    min-height: 80vh; /* Cambia 'height' a 'min-height' */
+    position: relative; /* Agrega 'position: relative;' */
+}
+#calificacion{
+    width: 70%;
+    margin: auto;
+}
+
+#footer {
+    
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

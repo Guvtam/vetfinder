@@ -2,12 +2,16 @@
 
 {% block content %}
 
-<div class="container">
-    <h1 class="text-center">Registrar un Servicio</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Registrar Servicio</button>
-    </form>
+<div id="servicio-registro">
+    <div class="container" id="form-servicio">
+        <h1 class="text-center">Registrar tu Servicio</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Registrar Servicio</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

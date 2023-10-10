@@ -1,17 +1,24 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<h1>Haz tus consultas</h1>
-<form method="POST" style="background-color: gray; padding:10%">
-    {% csrf_token %}
-    <input type="text" class="form-control" name="user_input">
-    <button type="submit" class="btn btn-primary mt-3">Enviar</button>
-</form>
+<div id="chat">
+            <h1 class="text-center">Haz tus consultas</h1>
+        {% if request.user.is_authenticated %}
+            <form method="POST" id="form-chat">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="user_input">
+                <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+            </form>
+        {% else %}
+        <p>Registrate a acceder a nuestro contenido</p>
+        {% endif %}
 
-{% if response %}
-    <div>
-        {{ response|safe }}
-    </div>
-{% endif%}
+        {% if response %}
+            <div>
+                {{ response|safe }}
+            </div>
+        {% endif %}
+</div>
+
 
 {% endblock %}

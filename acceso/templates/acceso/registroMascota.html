@@ -4,50 +4,55 @@
 
 {% block content %}
 
-<div class="container"  style="background-color:grey">
-    <h1 class="text-center">Registro Mascota</h1>
-    
-    <form method="post" style="width:70%; margin:auto" enctype="multipart/form-data">
-        {% csrf_token %}
-       <!-- {{ form.as_p }}-->
-       <div class="form-group">
-        <label for="{{ form.nombre.id_for_label }}"></label>
-        {{ form.nombre }}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.especie.id_for_label }}"></label>
-        {{ form.especie }}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.raza.id_for_label }}"></label>
-        {{ form.raza }}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.fecha_nacimiento_mascota.id_for_label }}">Fecha de Nacimiento:</label>
-        {{ form.fecha_nacimiento_mascota }}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.genero_mascota.id_for_label }}">Género de tu mascota:</label>
-        {{ form.genero_mascota }}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.color.id_for_label }}"></label>
-        {{ form.color }}
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
-        {{ form.imagen }}
+<div id="mascota-registro">
+    <div class="container" id="form-mascota" >
+
+        <h1 class="text-center">Registra tu Mascota</h1>
+        
+        <form method="post" style="width:70%; margin:auto" enctype="multipart/form-data">
+            {% csrf_token %}
+           <!-- {{ form.as_p }}-->
+           <div class="form-group">
+            <label for="{{ form.nombre.id_for_label }}"></label>
+            {{ form.nombre }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.especie.id_for_label }}"></label>
+            {{ form.especie }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.raza.id_for_label }}"></label>
+            {{ form.raza }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.fecha_nacimiento_mascota.id_for_label }}">Fecha de Nacimiento:</label>
+            {{ form.fecha_nacimiento_mascota }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.genero_mascota.id_for_label }}">Género de tu mascota:</label>
+            {{ form.genero_mascota }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.color.id_for_label }}"></label>
+            {{ form.color }}
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
+            {{ form.imagen }}
+            
+        </div>
+        <div class="form-group">
+            <label for="{{ form.identificacion.id_for_label }}"></label>
+            {{ form.identificacion }}
+        </div>
+        <br>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+            
+        </form>
         
     </div>
-    <div class="form-group">
-        <label for="{{ form.identificacion.id_for_label }}"></label>
-        {{ form.identificacion }}
-    </div>
-    <br>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        
-    </form>
-    
 </div>
 {% endblock %}

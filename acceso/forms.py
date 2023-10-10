@@ -17,6 +17,7 @@ class LoginForm(forms.Form):
     
     
     
+    
 
 class RegistroUsuarioForm(UserCreationForm):
     username = forms.CharField(
@@ -44,12 +45,15 @@ class RegistroUsuarioForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Teléfono'}),
     )
     direccion = forms.CharField(
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Dirección'}),
     )
     fechaNac = forms.DateField(
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-control','type': 'date', 'placeholder': 'Fecha de Nacimiento'}),
     )
     genero = forms.ChoiceField(
+        required=False,
         choices=[('Masculino', 'Masculino'), ('Femenino', 'Femenino'), 
         ('No especificar', 'No especificar'),
         ('Prefiero no decirlo', 'Prefiero no decirlo'),('Otro', 'Otro'),],
@@ -67,7 +71,7 @@ class RegistroUsuarioForm(UserCreationForm):
     
     class Meta:
         model = DuenoMascota
-        fields = ['username', 'first_name', 'last_name', 'email', 'telefono', 'direccion', 'fechaNac', 'genero', 'imagen_perfil', 'password1', 'password2',]
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil', 'password1', 'password2',]
 
 
 

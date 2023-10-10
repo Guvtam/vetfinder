@@ -1,22 +1,24 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center">Selecciona tu tipo de usuario</h1>
+<div id="tipo-usuario">
+    <div class="container">
+        <h1 class="text-center">Selecciona tu tipo de usuario</h1>
+        
+        <form method="post" style="width:70%; margin:auto">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Selecciona tu tipo de usuario:</label>
+                {{ tipo_usuario_form.tipo_usuario }}
+            </div>
+            
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Continuar</button>
+            </div>
+        </form>
+    </div>
     
-    <form method="post" style="width:70%; margin:auto">
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <label>Selecciona tu tipo de usuario:</label>
-            {{ tipo_usuario_form.tipo_usuario }}
-        </div>
-        
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Continuar</button>
-        </div>
-    </form>
 </div>
-
 
 {% endblock %}

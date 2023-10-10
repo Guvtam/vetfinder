@@ -17,7 +17,21 @@ def inicio_sesion(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+
+                # Verifica el tipo de usuario
+                try:
+                    tipo_usuario_obj = TipoUsuario.objects.get(usuario=user)
+                    tipo_usuario = tipo_usuario_obj.tipo_usuario
+                except TipoUsuario.DoesNotExist:
+                    tipo_usuario = None
+
+                if tipo_usuario == 'dueno':
+                    return redirect('mi_mascota')
+                elif tipo_usuario == 'servicios':
+                    return redirect('mis_servicios')
+                else:
+                    return redirect('home')  # Redirige predeterminadamente
+
             else:
                 messages.error(request, 'Credenciales inválidas o usuario desactivado.')
     else:

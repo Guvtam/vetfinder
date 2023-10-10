@@ -29,6 +29,17 @@ class Servicio(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def calcular_calificacion_promedio(self):
+        calificaciones = Calificacion.objects.filter(servicio=self)
+        if calificaciones.exists():
+            promedio = calificaciones.aggregate(models.Avg('calificacion'))['calificacion__avg']
+            return round(promedio, 2)  # Redondear el promedio a 2 decimales
+        else:
+            return 0  # Otra forma de manejar si no hay calificaciones
+
+    calificacion_promedio = property(calcular_calificacion_promedio)
+
 
 
 class Calificacion(models.Model):

@@ -1,44 +1,50 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<h1>Detalles del Servicio</h1>
+    <div id="detalle">
+        <h1 class="text-center">Detalles del Servicio</h1>
 
-<div class="card">
-    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
-    <div class="card-body">
-        <h5 class="card-title">{{ servicio.nombre }}</h5>
-        <p class="card-text">Categoría: {{ servicio.categoria }}</p>
-        <p class="card-text">Dirección: {{ servicio.direccion }}</p>
-        <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
-        <p class="card-text">Horario: {{ servicio.horario }}</p>
-        <p class="card-text">Descripción: {{ servicio.descripcion }}</p>
-        <p class="card-text">Sitio web: <a href="{{ servicio.sitio_web }}" target="_blank">{{ servicio.sitio_web }}</a></p>
+        <div class="card" style="width: 50%; margin: auto; text-align: center;">
+            <div class="card-image rounded-circle" style="display: inline-block;">
+                <img src="{{ servicio.imagen.url }}" alt="{{ servicio.nombre }}" style="max-width: 100%; max-height: 100%;">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ servicio.nombre }}</h5>
+                <p class="card-text">Categoría: {{ servicio.categoria }}</p>
+                <p class="card-text">Dirección: {{ servicio.direccion }}</p>
+                <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
+                <p class="card-text">Horario: {{ servicio.horario }}</p>
+                <p class="card-text">Descripción: {{ servicio.descripcion }}</p>
+                <p class="card-text">Sitio web: <a href="{{ servicio.sitio_web }}" target="_blank">{{ servicio.sitio_web }}</a></p>
+            </div>
+        </div>
         
+
+       <div id="calificacion">
+        <h2>Calificaciones y Comentarios</h2>
+        <ul>
+            {% for calificacion in calificaciones %}
+                <li>
+                    <p>Calificación: {{ calificacion.calificacion }}</p>
+                    <p>Comentario: {{ calificacion.comentario }}</p>
+                    <p>Por: {{ calificacion.usuario.username }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+       
+
+        {% if user.is_authenticated %}
+            <h2>Deja tu Calificación</h2>
+            <form method="post" >
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Enviar Calificación</button>
+            </form>
+        {% else %}
+            <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
+        {% endif %}
+  <br>
+        <a href="{% url 'servicios' %}" class="btn btn-secondary">Volver a la lista de servicios</a>
     </div>
 </div>
-
-<h2>Calificaciones y Comentarios</h2>
-            <ul>
-                {% for calificacion in calificaciones %}
-                    <li>
-                        <p>Calificación: {{ calificacion.calificacion }}</p>
-                        <p>Comentario: {{ calificacion.comentario }}</p>
-                        <p>Por: {{ calificacion.usuario.username }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            {% if user.is_authenticated %}
-                <h2>Deja tu Calificación</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Enviar Calificación</button>
-                </form>
-            {% else %}
-                <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
-            {% endif %}
-       
-  
-  <a href="{% url 'servicios' %}">Volver a la lista de servicios</a>
 {% endblock %}
