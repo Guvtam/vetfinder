@@ -2,8 +2,8 @@
 
 {% block content %}
     <div id="servicios">
-        <h1 class="text-center">Servicios</h1>
-        <p>Aquí encontrarás los servicios que tu mascota necesita.</p>
+        <h1 class="text-center">Servicios para tu mascota</h1>
+        <p class="text-center">Aquí encontrarás los servicios que tu mascota necesita.</p>
         {% if request.user.is_authenticated %}
         <!-- Este contenido solo se muestra a usuarios autenticados -->
         <div class="text-center">
@@ -39,7 +39,8 @@
 
         {% else %}
         <!-- Este contenido se muestra a usuarios no autenticados -->
-        <p>Por favor, inicia sesión para acceder a nuestro contenido.</p>
+        <p class="text-center">Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a nuestro todo nuestro contenido.</p>
+        
         {% endif %}
     </div>
 {% endblock %}

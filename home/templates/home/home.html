@@ -7,8 +7,8 @@
         <p id="parrafo-index">La mejor web para las necesidades de tu mascota.</p>
         {% if not user.is_authenticated %}
         <div id="botones-index">
-            <a href="{% url 'signup' %}" class="btn btn-outline-light">Registrate</a>
-            <a href="{% url 'login' %}" class="btn btn-primary">Inicia Sesión</a>
+            <a href="{% url 'signup' %}" id="botones-index" class="btn btn-outline-light">Registrate</a>
+            <a href="{% url 'login' %}" id="botones-index" class="btn btn-primary">Inicia Sesión</a>
         </div>
         {% endif %}
     </div>

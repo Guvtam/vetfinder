@@ -3,6 +3,7 @@
 {% block content %}
 <div id="chat">
             <h1 class="text-center">Haz tus consultas</h1>
+            
         {% if request.user.is_authenticated %}
             <form method="POST" id="form-chat">
                 {% csrf_token %}
@@ -10,7 +11,8 @@
                 <button type="submit" class="btn btn-primary mt-3">Enviar</button>
             </form>
         {% else %}
-        <p>Registrate a acceder a nuestro contenido</p>
+
+        <p class="text-center" style="width: 50%;margin:auto; background-color:rgb(253, 212, 212);">Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a nuestro todo nuestro contenido.</p>
         {% endif %}
 
         {% if response %}
