@@ -2,18 +2,39 @@
 
 {% block content %}
 
-<div class="col-md-8">
-    <!-- IFRAME de Google Maps -->
-    <iframe
-      width="600"
-      height="400"
-      style="border:0"
-      loading="lazy"
-      allowfullscreen
-      referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCZAz4KOLAfJydXhn9D4nSS3R-Z5AAYBOo
-        &q=Space+Needle,Seattle+WA">
-    </iframe>
-</div>
+<button id="obtenerUbicacion">Obtener Ubicación</button>
+<div id="mapa" style="width: 100%; height: 400px;">
+  <iframe
+  width=" 100%"
+  height="400px"
+  allowfullscreen
+  referrerpolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCZAz4KOLAfJydXhn9D4nSS3R-Z5AAYBOo
+    &q=Space+Needle,Seattle+WA">
+</iframe></div>
 
+<script>
+  document.getElementById('obtenerUbicacion').addEventListener('click', () => {
+    if ("geolocation" in navigator) {
+      // El navegador admite geolocalización.
+      navigator.geolocation.getCurrentPosition(function(position) {
+        // La ubicación se obtiene exitosamente.
+        const latitud = position.coords.latitude;
+        const longitud = position.coords.longitude;
+
+        // Crear un mapa de Google Maps centrado en las coordenadas obtenidas
+        const mapa = new google.maps.Map(document.getElementById('mapa'), {
+          center: { lat: latitud, lng: longitud },
+          zoom: 15 // Puedes ajustar el nivel de zoom según tus necesidades
+        });
+      }, function(error) {
+        // Ocurrió un error al obtener la ubicación.
+        console.error("Error al obtener la ubicación: " + error.message);
+      });
+    } else {
+      // El navegador no admite geolocalización.
+      console.log("La geolocalización no está disponible en este navegador.");
+    }
+  });
+</script>
  {% endblock %}
