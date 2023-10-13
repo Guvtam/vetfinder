@@ -9,7 +9,7 @@ class DuenoMascota(AbstractUser):
     genero = models.CharField(max_length=20, choices=[('Masculino', 'Masculino'), ('Femenino', 'Femenino')])
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     tiene_mascota= models.BooleanField(default=False)
     imagen_perfil = models.ImageField(upload_to='dueno_img/', blank=True, null=True)
 

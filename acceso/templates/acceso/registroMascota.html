@@ -25,20 +25,20 @@
             {{ form.raza }}
         </div>
         <div class="form-group">
-            <label for="{{ form.fecha_nacimiento_mascota.id_for_label }}">Fecha de Nacimiento:</label>
+            <label for="{{ form.fecha_nacimiento_mascota.id_for_label }}"></label>
             {{ form.fecha_nacimiento_mascota }}
         </div>
         <div class="form-group">
-            <label for="{{ form.genero_mascota.id_for_label }}">Género de tu mascota:</label>
+            <label for="{{ form.genero_mascota.id_for_label }}"></label>
             {{ form.genero_mascota }}
         </div>
         <div class="form-group">
             <label for="{{ form.color.id_for_label }}"></label>
             {{ form.color }}
         </div>
-        <br>
+        
         <div class="form-group">
-            <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
+            <label for="{{ form.imagen.id_for_label }}"></label>
             {{ form.imagen }}
             
         </div>
@@ -49,6 +49,7 @@
         <br>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Registrar</button>
+                <a class="btn btn-danger" href="{% url 'cancelar' %}">Cancelar</a>
             </div>
             
         </form>

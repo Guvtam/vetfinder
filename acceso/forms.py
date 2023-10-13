@@ -75,7 +75,7 @@ class RegistroUsuarioForm(UserCreationForm):
     
     class Meta:
         model = DuenoMascota
-        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil', 'password1', 'password2',]
+        fields = ['username', 'first_name', 'last_name', 'email','telefono', 'imagen_perfil', 'password1', 'password2',]
 
 
 
