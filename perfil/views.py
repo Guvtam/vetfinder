@@ -77,3 +77,10 @@ def editar_miperfil(request):
         form = EditarPerfilForm(instance=request.user)
 
     return render(request, 'perfil/editar_perfil.html', {'form': form, 'tipo_usuario': tipo_usuario})
+
+
+def editar_mascota(request):
+    return render(request,'perfil/editar_mascota.html')
+
+def editar_servicio(request):
+    return render(request,'perfil/editar_servicio.html')

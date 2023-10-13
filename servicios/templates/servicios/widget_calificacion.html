@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+    <h2>Deja tu Calificación</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar Calificación</button>
+    </form>
+{% else %}
+    <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
+{% endif %}

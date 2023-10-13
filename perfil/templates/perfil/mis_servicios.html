@@ -9,7 +9,7 @@
         {% for servicio in servicios %}
         <div class="col-md-4 mb-4">
             <div class="card">
-                <a href="{% url 'detalle_servicio' servicio.id %}">
+                <a href="#">
                     <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ servicio.nombre }}</h5>
@@ -19,6 +19,7 @@
                         <p class="card-text">Teléfono: {{ servicio.horario }}</p>
                     </div>
                 </a>
+                <a href="{% url 'editar_servicio' %}" class="btn btn-warning">Editar</a>
             </div>
         </div>
         {% endfor %}

@@ -28,6 +28,10 @@ class ServicioForm(forms.ModelForm):
         widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Sitio web'}),
         required=False,
     )
+    imagen = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+    )
 
     class Meta:
         model = Servicio

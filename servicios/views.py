@@ -93,3 +93,5 @@ def buscar_servicio(request):
 
 
 
+def mapas(request):
+    return render(request,'servicios/mapas.html')

@@ -33,16 +33,7 @@
         </ul>
        
 
-        {% if user.is_authenticated %}
-            <h2>Deja tu Calificación</h2>
-            <form method="post" >
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Enviar Calificación</button>
-            </form>
-        {% else %}
-            <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
-        {% endif %}
+        {% include 'servicios/widget_calificacion.html' %}
   <br>
         <a href="{% url 'servicios' %}" class="btn btn-secondary">Volver a la lista de servicios</a>
     </div>

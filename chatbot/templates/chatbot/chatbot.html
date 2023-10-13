@@ -6,9 +6,12 @@
             
         {% if request.user.is_authenticated %}
             <form method="POST" id="form-chat">
+                <p>Aqui puedes Interactuar con Chat-GPT para obtener consejos para tu mascota</p>
                 {% csrf_token %}
-                <input type="text" class="form-control" name="user_input">
-                <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+                <input type="text" class="form-control" name="user_input" placeholder="Escribe aquí tu consulta">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+                </div>
             </form>
         {% else %}
 
