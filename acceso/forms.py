@@ -66,6 +66,10 @@ class RegistroUsuarioForm(UserCreationForm):
     password2 = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar contraseña'}),
     )
+    imagen_perfil = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+    )
     captcha = ReCaptchaField()
     
     
@@ -120,6 +124,10 @@ class MascotaForm(forms.ModelForm):
         max_length=150,  
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Identificación'}),
+    )
+    imagen = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
     )
     class Meta:
         model = Mascota

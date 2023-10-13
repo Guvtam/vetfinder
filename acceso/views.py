@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Mascota , TipoUsuario
+from django.db.utils import IntegrityError
 
 
 
@@ -39,7 +40,6 @@ def inicio_sesion(request):
     return render(request, 'acceso/login.html', {'form': form})
 
     
-
 def registro_dueno_mascota(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST, request.FILES)
@@ -49,10 +49,14 @@ def registro_dueno_mascota(request):
                 form.add_error(None, "Por favor, complete el captcha.")
                 return render(request, 'acceso/signup.html', {'form': form})
             
-            user = form.save()
-            login(request, user)
-            user.save()
-            return redirect('seleccionar_tipo_usuario')
+            try:
+                user = form.save()
+                login(request, user)
+                user.save()
+                return redirect('seleccionar_tipo_usuario')
+            except IntegrityError:
+                form.add_error('email', "El correo electrónico ya está registrado. Por favor, use otro.")
+                return render(request, 'acceso/signup.html', {'form': form})
     else:
         form = RegistroUsuarioForm()
     return render(request, 'acceso/signup.html', {'form': form})
@@ -103,4 +107,7 @@ def cerrar_sesion(request):
     logout(request)
     return redirect('home')
 
+
+def cancelar(request):
+    return render(request,'home/home.html')
 
