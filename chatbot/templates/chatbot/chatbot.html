@@ -2,28 +2,32 @@
 
 {% block content %}
 <div id="chat">
-            <h1 class="text-center">Haz tus consultas</h1>
-            
-        {% if request.user.is_authenticated %}
-            <form method="POST" id="form-chat">
-                <p>Aqui puedes Interactuar con Chat-GPT para obtener consejos para tu mascota</p>
-                {% csrf_token %}
-                <input type="text" class="form-control" name="user_input" placeholder="Escribe aquí tu consulta">
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary mt-3">Enviar</button>
-                </div>
-            </form>
-        {% else %}
+    <h1 class="text-center">Haz tus consultas</h1>
 
-        <p class="text-center" style="width: 50%;margin:auto; background-color:rgb(253, 212, 212);">Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a nuestro todo nuestro contenido.</p>
-        {% endif %}
+    <form method="POST" id="form-chat">
+        <p>Aquí puedes interactuar con Chat-GPT para obtener consejos para tu mascota</p>
+        {% csrf_token %}
+        <input type="text" class="form-control" name="user_input" placeholder="Escribe aquí tu consulta" id="user-input-field">
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+        </div>
+    </form>
 
-        {% if response %}
-            <div>
-                {{ response|safe }}
-            </div>
-        {% endif %}
+    {% if not request.user.is_authenticated %}
+    <script>
+        // Deshabilitar el campo de entrada si el usuario no está autenticado
+        document.getElementById('user-input-field').disabled = true;
+    </script>
+    <p class="text-center" style="width: 50%;margin:auto; background-color:rgb(253, 212, 212);">
+        Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a todo nuestro contenido.
+    </p>
+    {% endif %}
+
+    {% if response %}
+    <div>
+        {{ response|safe }}
+    </div>
+    {% endif %}
 </div>
-
 
 {% endblock %}

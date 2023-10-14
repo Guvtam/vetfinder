@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Mascota , TipoUsuario
 from django.db.utils import IntegrityError
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 
 
@@ -40,7 +42,7 @@ def inicio_sesion(request):
     return render(request, 'acceso/login.html', {'form': form})
 
     
-def registro_dueno_mascota(request):
+'''def registro_dueno_mascota(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST, request.FILES)
         if form.is_valid():
@@ -59,7 +61,41 @@ def registro_dueno_mascota(request):
                 return render(request, 'acceso/signup.html', {'form': form})
     else:
         form = RegistroUsuarioForm()
+    return render(request, 'acceso/signup.html', {'form': form})'''
+    
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+def registro_dueno_mascota(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST, request.FILES)
+        if form.is_valid():
+            captcha_response = request.POST.get('g-recaptcha-response')
+            if not captcha_response:
+                form.add_error(None, "Por favor, complete el captcha.")
+                return render(request, 'acceso/signup.html', {'form': form})
+            
+            try:
+                user = form.save()
+                login(request, user)
+
+                # Envía el correo electrónico de registro exitoso al correo del usuario
+                subject = 'Registro Exitoso'
+                message = 'Gracias por registrarte en nuestro sitio. Tu registro ha sido exitoso.'
+                from_email = 'VETFINDER - gutierrez.valdes.t@gmail.com'
+                recipient_list = [user.email]
+
+                html_message = render_to_string('acceso/registro_exitoso.html')
+                send_mail(subject, message, from_email, recipient_list, html_message=html_message)
+
+                return redirect('seleccionar_tipo_usuario')
+            except IntegrityError:
+                form.add_error('email', "El correo electrónico ya está registrado. Por favor, use otro.")
+                return render(request, 'acceso/signup.html', {'form': form})
+    else:
+        form = RegistroUsuarioForm()
     return render(request, 'acceso/signup.html', {'form': form})
+
 
 # Vista para seleccionar el tipo de usuario (dueño de mascota o servicio)
 

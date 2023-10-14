@@ -2,6 +2,7 @@
 
 {% block content %}
     <div id="servicios">
+       <br>
         <div id="search-container" >
             <select id="categoryFilter" class="form-control" style="width:30%; margin:auto;">
                 <option value="todos">Todos</option>
@@ -15,11 +16,20 @@
                 <option value="Peluqueria Canina">Peluqueria Canina</option>
                 <option value="Alimentos Mascotas">Alimentos Mascotas</option>
             </select>
+            <br>
             <div class="text-center">
-                <button id="searchButton" class="btn btn-primary">Buscar</button>
+                {% if request.user.is_authenticated %}
+                    <button id="searchButton" class="btn btn-primary">Buscar</button>
+                {% else %}
+                    <p class="text-center" style="width: 50%; margin:auto; background-color:rgb(253, 212, 212);">
+                        Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a todo nuestro contenido.
+                    </p>
+                {% endif %}
+                
+                
             </div>
         </div>
-    
+    <br>
         <div id="map" style="height: 400px;"></div>
     </div>
 

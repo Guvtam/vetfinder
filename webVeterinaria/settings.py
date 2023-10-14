@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -162,3 +163,12 @@ if DEBUG:
 # Claves de sitio y secreta de reCAPTCHA
 RECAPTCHA_PUBLIC_KEY = '6LfLh3woAAAAAKwkTS5aeadmXwA-9MsHfSPPaaAO' #'6LeoyXIoAAAAALAX7ps7aehzxamw5hHcgoUqazlx'
 RECAPTCHA_PRIVATE_KEY = '6LfLh3woAAAAADll8UN--SD3eblx3-2Rf4JvmOem' #'6LeoyXIoAAAAAIPhYaDA2a_e4dIKP_gBrzYAAkY3'
+
+
+#CONFIGURACION EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gutierrez.valdes.t@gmail.com'
+EMAIL_HOST_PASSWORD = 'dhtm zozv aulv pmyp'
