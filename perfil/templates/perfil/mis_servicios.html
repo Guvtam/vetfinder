@@ -1,29 +1,30 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<div class="container">
+<div id="" >
     <h1 class="text-center">
         Mis Servicios
     </h1>
     <div class="row">
         {% for servicio in servicios %}
         <div class="col-md-4 mb-4">
-            <div class="card">
+            <div class="card h-100" style="width: 18rem; margin:auto;">
                 
                     <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ servicio.nombre }}</h5>
-                        <p class="card-text">Categoría: {{ servicio.categoria }}</p>
                         <p class="card-text">Dirección: {{ servicio.direccion }}</p>
                         <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
-                        <p class="card-text">Teléfono: {{ servicio.horario }}</p>
+                        <p class="card-text">Horario: {{ servicio.horario }}</p>
                     </div>
-               
-                <a href="{% url 'editar_servicio' servicio.id  %}" class="btn btn-warning">Editar</a>
+                    
+                    <a href="{% url 'editar_servicio' servicio.id  %}" class="btn btn-warning">Editar</a>
             </div>
+            
         </div>
         {% endfor %}
     </div>
+    
 </div>
 
 {% endblock %}

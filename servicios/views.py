@@ -23,7 +23,7 @@ def registrar_servicio(request):
             servicio = form.save(commit=False)
             servicio.usuario = user  # Asigna el usuario directamente
             servicio.save()
-            return redirect('home')
+            return redirect('mis_servicios')
     else:
         form = ServicioForm()
 

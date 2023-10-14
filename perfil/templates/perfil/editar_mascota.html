@@ -6,9 +6,20 @@
         <h1 class="text-center">Editar Mascota</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {% if mascota.imagen %}
+    <div class="text-center">
+        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" style="border-radius: 50%; max-width: 200px;">
+    </div>
+    {% else %}
+    <p>Esta mascota no tiene una imagen registrada.</p>
+    {% endif %}
             {{ form.as_p }}
+            
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <a href="{% url 'mi_mascota' %}" class="btn btn-warning">Volver</a>
+                </div>
             </div>
         </form>
     </div>
