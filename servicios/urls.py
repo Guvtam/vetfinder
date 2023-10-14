@@ -6,5 +6,6 @@ urlpatterns=[
     path('servicio/<int:id>/',detalle_servicio,name='detalle_servicio'),
     path('buscar-servicio/', buscar_servicio,name='buscar_servicio'),
     path('registro-servicio/',registrar_servicio,name='registrar_servicio'),
-    path('mapas/',mapas,name='mapas')
+    path('mapas/',mapas,name='mapas'),
+    path('buscar-mapas/',mapas,name='buscar_mapas')
 ]

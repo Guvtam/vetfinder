@@ -1,108 +1,131 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZAz4KOLAfJydXhn9D4nSS3R-Z5AAYBOo&libraries=places"></script>
+    <div id="search-container">
+        <select id="categoryFilter" class="form-control" style="width:30%; margin:auto;">
+            <option value="todos">Todos</option>
+            <option value="Veterinaria">Veterinaria</option>
+            <option value="Cuidado Dental Mascotas">Cuidado Dental Mascotas</option>
+            <option value="Servicios de Emergencia Mascotas">Servicios de Emergencia Mascotas</option>
+            <option value="Guarderías Mascotas">Guarderías Mascotas</option>
+            <option value="Paseo de Perros">Paseo de Perros</option>
+            <option value="Entrenamiento Mascotas">Entrenamiento Mascotas</option>
+            <option value="Parques para Perros">Parques para Perros</option>
+            <option value="Peluqueria Canina">Peluqueria Canina</option>
+            <option value="Alimentos Mascotas">Alimentos Mascotas</option>
+        </select>
+        <div class="text-center">
+            <button id="searchButton" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
 
-<br>
-<div class="text-center">
-  <button id="obtenerUbicacion" class="btn btn-primary">Obtener Ubicación</button>
-</div>
-<br>
-<div id="mapa" style="width: 100%; height: 400px;">
-  <iframe
-  width=" 100%"
-  height="400px"
-  allowfullscreen
-  referrerpolicy="no-referrer-when-downgrade"
-  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCZAz4KOLAfJydXhn9D4nSS3R-Z5AAYBOo
-    &q=Space+Needle,Seattle+WA">
-</iframe></div>
-<script>
-  document.getElementById('obtenerUbicacion').addEventListener('click', () => {
-    if ("geolocation" in navigator) {
-      // El navegador admite geolocalización.
-      navigator.geolocation.getCurrentPosition(function(position) {
-        // La ubicación se obtiene exitosamente.
-        const latitud = position.coords.latitude;
-        const longitud = position.coords.longitude;
+    <div id="map" style="height: 400px;"></div>
 
-        // Crear un mapa de Google Maps centrado en las coordenadas obtenidas
-        const mapa = new google.maps.Map(document.getElementById('mapa'), {
-          center: { lat: latitud, lng: longitud },
-          zoom: 15
-        });
+    <script>
+        let map;
+        const markers = [];
 
-        // Inicializar el servicio PlacesService
-        const placesService = new google.maps.places.PlacesService(mapa);
+        // Función para agregar un marcador en el mapa
+        function addMarker(location, title, placeDetails) {
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: title
+            });
 
-        // Realizar una solicitud de búsqueda de veterinarias cercanas
-        placesService.nearbySearch({
-          location: { lat: latitud, lng: longitud },
-          radius: 10000, // Radio de búsqueda en metros
-          keyword: 'veterinaria' // Palabra clave para buscar veterinarias
-        }, function(results, status) {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (let i = 0; i < results.length; i++) {
-              const place = results[i];
-              // Agregar marcadores para cada resultado
-              new google.maps.Marker({
-                position: place.geometry.location,
-                map: mapa,
-                title: place.name
-              });
+            markers.push(marker);
 
-              // Agregar ventana de información (info window) con detalles adicionales al hacer clic en el marcador
-              const infowindow = new google.maps.InfoWindow();
-              const service = new google.maps.places.PlacesService(mapa);
+            // Agregar un oyente de clic para mostrar información detallada
+            marker.addListener('click', function() {
+                // Realizar una solicitud a la API de Place Details para obtener información detallada
+                const service = new google.maps.places.PlacesService(map);
+                const request = {
+                    placeId: placeDetails.place_id,
+                    fields: ['name', 'formatted_address', 'formatted_phone_number', 'website']
+                };
+                service.getDetails(request, function(place, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `
+                                <strong>${place.name}</strong><br>
+                                Dirección: ${place.formatted_address}<br>
+                                Teléfono: ${place.formatted_phone_number}<br>
+                                Sitio web: <a href="${place.website}" target="_blank">${place.website}</a>
+                            `
+                        });
+                        infoWindow.open(map, marker);
+                    }
+                });
+            });
+        }
 
-              const request = {
-                placeId: place.place_id
-              };
+        function initMapWithLocation(userLocation) {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: userLocation
+            });
 
-              service.getDetails(request, (place, status) => {
-                if (
-                  status === google.maps.places.PlacesServiceStatus.OK &&
-                  place &&
-                  place.geometry &&
-                  place.geometry.location
-                ) {
-                  const marker = new google.maps.Marker({
-                    map: mapa,
-                    position: place.geometry.location,
-                  });
+            // Agregar un marcador para la ubicación del usuario
+            addMarker(userLocation, 'Tu ubicación', { place_id: 'user_location' });
 
-                  google.maps.event.addListener(marker, "click", () => {
-                    const content = document.createElement("div");
-                    const nameElement = document.createElement("h2");
+            // Función para buscar servicios y agregar marcadores
+            function searchServices(category) {
+                // Limpiar marcadores previos
+                markers.forEach(marker => {
+                    if (marker.getTitle() !== 'Tu ubicación') {
+                        marker.setMap(null);
+                    }
+                });
 
-                    nameElement.textContent = place.name;
-                    content.appendChild(nameElement);
+                const request = {
+                    location: map.getCenter(),
+                    radius: 5000, // Radio de búsqueda de 5 km
+                    type: ['point_of_interest'], // Tipo de lugar que deseas buscar
+                    keyword: category // Categoría seleccionada
+                };
 
-                    const placeIdElement = document.createElement("p");
+                const placesService = new google.maps.places.PlacesService(map);
 
-                    placeIdElement.textContent = place.place_id;
-                    content.appendChild(placeIdElement);
-
-                    const placeAddressElement = document.createElement("p");
-
-                    placeAddressElement.textContent = place.formatted_address;
-                    content.appendChild(placeAddressElement);
-                    infowindow.setContent(content);
-                    infowindow.open(mapa, marker);
-                  });
-                }
-              });
+                placesService.nearbySearch(request, function(results, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        // Agregar marcadores para los lugares encontrados
+                        for (let i = 0; i < results.length; i++) {
+                            const place = results[i];
+                            const location = place.geometry.location;
+                            const title = place.name;
+                            const placeDetails = place;
+                            addMarker(location, title, placeDetails);
+                        }
+                    }
+                });
             }
-          }
-        });
-      }, function(error) {
-        // Ocurrió un error al obtener la ubicación.
-        console.error("Error al obtener la ubicación: " + error.message);
-      });
-    } else {
-      // El navegador no admite geolocalización.
-      console.log("La geolocalización no está disponible en este navegador.");
-    }
-  });
-</script>
- {% endblock %}
+
+            // Llama a la función de búsqueda y agrega marcadores
+            document.getElementById('searchButton').addEventListener('click', function () {
+                const category = document.getElementById('categoryFilter').value;
+                searchServices(category);
+            });
+        }
+
+        // Comprobar si el navegador admite geolocalización
+        if ("geolocation" in navigator) {
+            // Obtener la ubicación del usuario
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                // Llama a la función initMapWithLocation con la ubicación del usuario
+                initMapWithLocation(userLocation);
+            });
+        } else {
+            console.log("Geolocalización no es compatible en este navegador.");
+
+            // Inicializa el mapa con una ubicación predeterminada
+            initMapWithLocation({ lat: 0, lng: 0 });
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLCU8Shs5h8VnWJasaLlTogR0gWJ7OYVM&libraries=places"></script>
+{% endblock %}

@@ -95,3 +95,8 @@ def buscar_servicio(request):
 
 def mapas(request):
     return render(request,'servicios/mapas.html')
+
+
+
+def buscar_en_mapas(request):
+    return render(request,'servicios/mapas.html')

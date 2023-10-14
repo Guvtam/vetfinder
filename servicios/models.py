@@ -13,6 +13,7 @@ class Servicio(models.Model):
         ('Parques para Perros', 'Parques para Perros'),
         ('Peluqueria', 'Peluqueria'),
         ('Adopciones', 'Adopciones'),
+        ('Alimentos Mascotas', 'Alimentos Mascotas')
     ]
 
     nombre = models.CharField(max_length=100)
