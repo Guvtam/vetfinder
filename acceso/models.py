@@ -3,7 +3,7 @@ from django.db import models
 
 class DuenoMascota(AbstractUser):
     id = models.AutoField(primary_key=True)
-    telefono = models.CharField(max_length=15)
+    telefono = models.CharField(max_length=9)
     direccion = models.TextField()
     fechaNac = models.DateField(null=True, blank=True)
     genero = models.CharField(max_length=20, choices=[('Masculino', 'Masculino'), ('Femenino', 'Femenino')])

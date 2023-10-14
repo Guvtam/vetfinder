@@ -42,7 +42,7 @@ class RegistroUsuarioForm(UserCreationForm):
     )
     telefono = forms.CharField(
         max_length=15,
-        widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Teléfono'}),
+        widget=forms.TextInput(attrs={'class': 'form-control','placeholder': '999999999'}),
     )
     direccion = forms.CharField(
         required=False,
