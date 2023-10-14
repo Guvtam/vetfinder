@@ -18,7 +18,7 @@
             <p>Fecha de Nacimiento: {% if mascota.fecha_nacimiento_mascota %} {{ mascota.fecha_nacimiento_mascota|date:"d/m/Y" }} {% else %} Desconocida {% endif %}</p>
             <p>Género: {{ mascota.genero_mascota }}</p>
             <p>Color: {{ mascota.color }}</p>
-            <a href="{% url 'editar_mascota' %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'editar_mascota' mascota.id %}" class="btn btn-warning">Editar</a>
         </div>
     </div>
 </div>

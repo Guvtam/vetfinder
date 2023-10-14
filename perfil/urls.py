@@ -6,6 +6,6 @@ urlpatterns=[
     path('mi-mascota/',mi_mascota,name='mi_mascota'),
     path('mis-servicios/',mis_servicios,name='mis_servicios'),
     path('editar-perfil/',editar_miperfil,name='editar_perfil'),
-    path('editar-mascota/',editar_mascota,name='editar_mascota'),
-    path('editar-servicio/',editar_servicio,name='editar_servicio'),
+    path('editar-mascota/<int:mascota_id>',editar_mascota,name='editar_mascota'),
+    path('editar-servicio/<int:servicio_id>',editar_servicio,name='editar_servicio'),
 ]

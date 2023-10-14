@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from acceso.models import Mascota, TipoUsuario
 from acceso.forms import MascotaForm
 from servicios.models import Servicio
-from .forms import EditarPerfilForm
+from .forms import EditarPerfilForm, EditarServicioForm, EditarMascotaForm
 
 # Create your views here.
 def mi_perfil(request):
@@ -79,8 +79,28 @@ def editar_miperfil(request):
     return render(request, 'perfil/editar_perfil.html', {'form': form, 'tipo_usuario': tipo_usuario})
 
 
-def editar_mascota(request):
-    return render(request,'perfil/editar_mascota.html')
+def editar_mascota(request, mascota_id):
+    mascota = Mascota.objects.get(id=mascota_id)
 
-def editar_servicio(request):
-    return render(request,'perfil/editar_servicio.html')
+    if request.method == 'POST':
+        form = EditarMascotaForm(request.POST, request.FILES, instance=mascota)
+        if form.is_valid():
+            form.save()
+            return redirect('mi_mascota')  # Redirige a la página de detalle de mascota o a donde desees
+    else:
+        form = EditarMascotaForm(instance=mascota)
+
+    return render(request, 'perfil/editar_mascota.html', {'form': form, 'mascota': mascota})
+
+def editar_servicio(request, servicio_id):
+    servicio = Servicio.objects.get(id=servicio_id)
+
+    if request.method == 'POST':
+        form = EditarServicioForm(request.POST, request.FILES, instance=servicio)
+        if form.is_valid():
+            form.save()
+            return redirect('mis_servicios')  # Redirige a la página de detalle del servicio
+    else:
+        form = EditarServicioForm(instance=servicio)
+
+    return render(request, 'perfil/editar_servicio.html', {'form': form, 'servicio': servicio})
