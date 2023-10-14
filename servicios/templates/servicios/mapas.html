@@ -59,14 +59,38 @@
             });
         }
 
-        function initMapWithLocation(userLocation) {
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: userLocation
-            });
+        // Función para iniciar el mapa
+        function initMap() {
+            if ("geolocation" in navigator) {
+                // Solicitar permiso para acceder a la ubicación del usuario
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
 
-            // Agregar un marcador para la ubicación del usuario
-            addMarker(userLocation, 'Tu ubicación', { place_id: 'user_location' });
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 12,
+                        center: userLocation
+                    });
+
+                    // Agregar un marcador para la ubicación del usuario
+                    addMarker(userLocation, 'Tu ubicación', { place_id: 'user_location' });
+                }, function(error) {
+                    // Manejar errores de permisos o geolocalización deshabilitada
+                    console.error("Error al obtener la ubicación del usuario: " + error.message);
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 12,
+                        center: { lat: 0, lng: 0 }
+                    });
+                });
+            } else {
+                console.log("Geolocalización no es compatible en este navegador.");
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: { lat: 0, lng: 0 }
+                });
+            }
 
             // Función para buscar servicios y agregar marcadores
             function searchServices(category) {
@@ -107,24 +131,8 @@
             });
         }
 
-        // Comprobar si el navegador admite geolocalización
-        if ("geolocation" in navigator) {
-            // Obtener la ubicación del usuario
-            navigator.geolocation.getCurrentPosition(function(position) {
-                const userLocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-
-                // Llama a la función initMapWithLocation con la ubicación del usuario
-                initMapWithLocation(userLocation);
-            });
-        } else {
-            console.log("Geolocalización no es compatible en este navegador.");
-
-            // Inicializa el mapa con una ubicación predeterminada
-            initMapWithLocation({ lat: 0, lng: 0 });
-        }
+        // Llama a la función initMap al cargar la página
+        window.onload = initMap;
     </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLCU8Shs5h8VnWJasaLlTogR0gWJ7OYVM&libraries=places"></script>
