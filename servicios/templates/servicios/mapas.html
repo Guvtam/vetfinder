@@ -1,25 +1,27 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <div id="search-container">
-        <select id="categoryFilter" class="form-control" style="width:30%; margin:auto;">
-            <option value="todos">Todos</option>
-            <option value="Veterinaria">Veterinaria</option>
-            <option value="Cuidado Dental Mascotas">Cuidado Dental Mascotas</option>
-            <option value="Servicios de Emergencia Mascotas">Servicios de Emergencia Mascotas</option>
-            <option value="Guarderías Mascotas">Guarderías Mascotas</option>
-            <option value="Paseo de Perros">Paseo de Perros</option>
-            <option value="Entrenamiento Mascotas">Entrenamiento Mascotas</option>
-            <option value="Parques para Perros">Parques para Perros</option>
-            <option value="Peluqueria Canina">Peluqueria Canina</option>
-            <option value="Alimentos Mascotas">Alimentos Mascotas</option>
-        </select>
-        <div class="text-center">
-            <button id="searchButton" class="btn btn-primary">Buscar</button>
+    <div id="servicios">
+        <div id="search-container" >
+            <select id="categoryFilter" class="form-control" style="width:30%; margin:auto;">
+                <option value="todos">Todos</option>
+                <option value="Veterinaria">Veterinaria</option>
+                <option value="Cuidado Dental Mascotas">Cuidado Dental Mascotas</option>
+                <option value="Servicios de Emergencia Mascotas">Servicios de Emergencia Mascotas</option>
+                <option value="Guarderías Mascotas">Guarderías Mascotas</option>
+                <option value="Paseo de Perros">Paseo de Perros</option>
+                <option value="Entrenamiento Mascotas">Entrenamiento Mascotas</option>
+                <option value="Parques para Perros">Parques para Perros</option>
+                <option value="Peluqueria Canina">Peluqueria Canina</option>
+                <option value="Alimentos Mascotas">Alimentos Mascotas</option>
+            </select>
+            <div class="text-center">
+                <button id="searchButton" class="btn btn-primary">Buscar</button>
+            </div>
         </div>
+    
+        <div id="map" style="height: 400px;"></div>
     </div>
-
-    <div id="map" style="height: 400px;"></div>
 
     <script>
         let map;
