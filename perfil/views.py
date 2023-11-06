@@ -20,7 +20,7 @@ def mi_perfil(request):
 
 def mi_mascota(request):
     user = request.user
-    mascota = Mascota.objects.filter(dueno=user).first()
+    mascotas = Mascota.objects.filter(dueno=user)
     tipo_usuario = None  # Inicializa tipo_usuario como None por defecto
 
     # Verifica si el usuario está autenticado y si tiene un TipoUsuario asociado
@@ -29,10 +29,9 @@ def mi_mascota(request):
             tipo_usuario = TipoUsuario.objects.get(usuario=user).tipo_usuario
         except TipoUsuario.DoesNotExist:
             tipo_usuario = None
-    if mascota:
-        return render(request, 'perfil/mascota.html', {'mascota': mascota,'user': user, 'tipo_usuario': tipo_usuario})
-    else:
-        return redirect('agregar_mascota')
+
+    return render(request, 'perfil/mascota.html', {'mascotas': mascotas, 'user': user, 'tipo_usuario': tipo_usuario})
+
    
 def mis_servicios(request):
     # Inicializa tipo_usuario como None por defecto

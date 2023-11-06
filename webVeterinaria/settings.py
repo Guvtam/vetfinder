@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'perfil',
     'chatbot',
     'captcha',
+    'redsocial',
     
     
 ]

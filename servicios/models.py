@@ -52,3 +52,4 @@ class Calificacion(models.Model):
     def __str__(self):
         return f"Calificación de {self.servicio.nombre} por {self.usuario.username}"
     
+    

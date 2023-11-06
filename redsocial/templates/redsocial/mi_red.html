@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Mi Red</h1>
+    </div>
+  <section style="width: 40%;margin:auto; ">
+    
+    <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
+    <a href="{% url 'perfil_usuario' user_id %}" class="btn btn-warning">Mi Perfil</a>
+    <a href="{% url 'mi_mascota' %}" class="btn btn-warning">Mi Mascota</a>
+  </section>
+
+  <section style="width: 60%; margin:auto;">
+    <h2>Quieres Compartir algo</h2>
+    <form method="post" action="{% url 'crear_publicacion' %}">
+        {% csrf_token %}
+        {{ formulario }}
+        <button type="submit" class="btn btn-primary">Publicar</button>
+    </form>
+
+    {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+  </section>
+{% endblock %}

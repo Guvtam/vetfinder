@@ -17,6 +17,8 @@
     <script>
         // Deshabilitar el campo de entrada si el usuario no está autenticado
         document.getElementById('user-input-field').disabled = true;
+        // Deshabilitar el botón de enviar
+        document.querySelector('#form-chat button[type="submit"]').disabled = true;
     </script>
     <p class="text-center" style="width: 50%;margin:auto; background-color:rgb(253, 212, 212);">
         Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a todo nuestro contenido.

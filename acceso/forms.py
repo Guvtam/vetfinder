@@ -5,7 +5,7 @@ from captcha.fields import ReCaptchaField
 
 
 
-class LoginForm(forms.Form):
+'''class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=100,
         required=True,
@@ -13,9 +13,18 @@ class LoginForm(forms.Form):
     )
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
+    )'''
+    
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
+        label=''
     )
-    
-    
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
+        label=''
+    )   
     
     
 
@@ -134,13 +143,3 @@ class MascotaForm(forms.ModelForm):
         fields = ['nombre', 'especie', 'raza', 'fecha_nacimiento_mascota', 'genero_mascota', 'color',  'imagen', 'identificacion', ]
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField(
-        max_length=150,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
-        label=''
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
-        label=''
-    )

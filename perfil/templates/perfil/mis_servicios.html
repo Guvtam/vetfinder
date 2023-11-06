@@ -5,6 +5,9 @@
     <h1 class="text-center">
         Mis Servicios
     </h1>
+    <div style="margin-left:60px;padding:10px;">
+        <a href="{% url 'registrar_servicio' %}" class="btn btn-warning">Agregar Servicio</a>
+    </div>
     <div class="row">
         {% for servicio in servicios %}
         <div class="col-md-4 mb-4">

@@ -1,0 +1,32 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div>
+    <h1 class="text-center">
+       {{ perfil.nombre }}
+    </h1>
+    <div style="padding:10px;">
+        {% if user.is_authenticated and user == perfil.dueno %}
+            <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
+            {% endif %}
+        
+        <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
+        <a href="{% url 'publicar_mensaje_mascota' perfil.id %}" class="btn btn-warning">Publicar Mensaje</a>
+        {% if user.is_authenticated and user == perfil.dueno %}
+            <a href="#" class="btn btn-warning">Ficha Clínica</a>
+        {% endif %}
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="imagen-redonda">
+            <div class="card-body">
+                <h5 class="card-title">{{ perfil.nombre }}</h5>
+                <p class="card-text">Especie: {{ perfil.especie }}</p>
+                <p class="card-text">Raza: {{ perfil.raza }}</p>
+                <p class="card-text">Género: {{ perfil.get_genero_perfil_display }}</p>
+                <p class="card-text">Color: {{ perfil.color }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

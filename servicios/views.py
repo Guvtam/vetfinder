@@ -46,21 +46,39 @@ def ver_servicio(request):
     return render(request, 'servicios/servicios.html', {'servicios': servicios, 'form': form, 'tipo_usuario': tipo_usuario})
 
 
-def detalle_servicio(request,id):
+
+
+def detalle_servicio(request, id):
     servicio = get_object_or_404(Servicio, pk=id)
     calificaciones = Calificacion.objects.filter(servicio=servicio)
+    tipo_usuario = None
+
+    if request.user.is_authenticated:
+        try:
+            tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
+            tipo_usuario = tipo_usuario_obj.tipo_usuario
+        except TipoUsuario.DoesNotExist:
+            tipo_usuario = None
+
     if request.method == 'POST':
         form = CalificacionForm(request.POST)
         if form.is_valid():
             nueva_calificacion = form.save(commit=False)
             nueva_calificacion.servicio = servicio
-            nueva_calificacion.usuario = request.user  
+            nueva_calificacion.usuario = request.user
+
+            # Verificar el tipo de usuario y realizar acciones según sea necesario
+            if tipo_usuario == 'dueño':
+                nueva_calificacion.es_dueño = True
+
             nueva_calificacion.save()
             return redirect('detalle_servicio', id=id)
     else:
         form = CalificacionForm()
-    return render(request, 'servicios/detalle_servicio.html', {'servicio': servicio, 'calificaciones': calificaciones, 'form': form})
 
+    return render(request, 'servicios/detalle_servicio.html', {'servicio': servicio, 'calificaciones': calificaciones, 'form': form, 'tipo_usuario': tipo_usuario})
+
+      
       
 
 
@@ -68,7 +86,7 @@ def detalle_servicio(request,id):
 def buscar_servicio(request):
     servicios = Servicio.objects.all()
     form = BusquedaForm(request.GET)
-    
+
     if form.is_valid():
         query = form.cleaned_data.get('query')
         categoria = form.cleaned_data.get('categoria')
@@ -94,9 +112,25 @@ def buscar_servicio(request):
 
 
 def mapas(request):
-    return render(request,'servicios/mapas.html')
+    tipo_usuario = None
 
+    if request.user.is_authenticated:
+        try:
+            tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
+            tipo_usuario = tipo_usuario_obj.tipo_usuario
+        except TipoUsuario.DoesNotExist:
+            tipo_usuario = None
 
+    return render(request, 'servicios/mapas.html', {'tipo_usuario': tipo_usuario})
 
 def buscar_en_mapas(request):
-    return render(request,'servicios/mapas.html')
+    tipo_usuario = None
+
+    if request.user.is_authenticated:
+        try:
+            tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
+            tipo_usuario = tipo_usuario_obj.tipo_usuario
+        except TipoUsuario.DoesNotExist:
+            tipo_usuario = None
+
+    return render(request, 'servicios/mapas.html', {'tipo_usuario': tipo_usuario})

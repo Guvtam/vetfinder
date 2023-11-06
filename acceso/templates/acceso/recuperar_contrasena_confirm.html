@@ -1,0 +1,24 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>Confirmación de Restablecimiento de Contraseña</h2>
+        <p>Tu solicitud de restablecimiento de contraseña se ha confirmado con éxito.</p>
+        
+
+        
+    </div>
+   <div style="width: 40%;margin:auto;">
+    <form method="post">
+        <p>Establece una nueva contraseña para tu cuenta.</p>
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Restablecer Contraseña</button>
+        </div>
+    </form>
+    <br>
+   </div>
+
+{% endblock %}

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center">Mi Perfil</h1>
+    <h1 class="text-center">Mi Datos</h1>
     <div class="row justify-content-center">
         <div class="col-md-4 text-center">
             {% if user.imagen_perfil %}
@@ -20,6 +20,7 @@
                 <li class="list-group-item"><strong>Género:</strong> {{ user.genero }}</li>
             </ul>
             <a href="{% url 'editar_perfil' %}" class="btn btn-primary mt-3">Editar Perfil</a>
+            <a href="{% url 'perfil_usuario' user.id %}" class="btn btn-warning mt-3">Ver Perfil</a>
         </div>
     </div>
 </div>

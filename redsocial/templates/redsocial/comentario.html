@@ -1,0 +1,23 @@
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+    <div style="width: 50%;margin:auto;">
+        <h2 class="text-center">Añadir un Comentario</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Comentar</button>
+        </form>
+
+        <!-- Mostrar los comentarios existentes -->
+        <h2 class="text-center">Comentarios</h2>
+        {% for comentario in comentarios %}
+            {{ comentario.autor }} dijo: {{ comentario.contenido }}
+        {% endfor %}
+    </div>
+

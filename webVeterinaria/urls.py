@@ -27,5 +27,7 @@ urlpatterns = [
     path('', include('servicios.urls')),
     path('', include('perfil.urls')),
     path('', include('chatbot.urls')),
+    path('', include('redsocial.urls')),
+   
    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

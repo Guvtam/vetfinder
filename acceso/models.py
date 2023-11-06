@@ -24,7 +24,7 @@ class TipoUsuario(models.Model):
     ]
     id = models.AutoField(primary_key=True)
     tipo_usuario = models.CharField(max_length=20, choices=TIPOS_USUARIO)
-    usuario = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(DuenoMascota, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tipo_usuario

@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="container">
+    <a href="{% url 'perfil_mascota' mascota_id %}" class="btn btn-warning">Volver Perfil</a>
+       
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Columna para el formulario de envío de mensajes -->
+            <div style="margin-top: 20px;">
+                <h2 class="text-center">Deja tu mensaje</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- Columna para mostrar los mensajes -->
+            <h2 class="text-center">Mensajes Recibidos:</h2>
+            <ul>
+                {% for mensaje in mensajes %}
+                    <li>{{ mensaje.contenido }} - {{ mensaje.emisor }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
