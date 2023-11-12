@@ -75,27 +75,41 @@ def buscar_amigo(request):
 
 
 
-
-    
-    
-
 @login_required
 def perfil_usuario(request, usuario_id):
     usuario_seleccionado = get_object_or_404(DuenoMascota, id=usuario_id)
-    comentarios = ComentarioUsuario.objects.filter(receptor=usuario_seleccionado)
     usuario_seleccionado_info = {
         'username': usuario_seleccionado.username,
         'email': usuario_seleccionado.email,
         # Otros campos que quieras mostrar del usuario seleccionado
     }
-    
+
+    # Verificar si el usuario autenticado es el dueño del perfil actual
+    es_dueño_del_perfil = request.user == usuario_seleccionado
+
+    # Obtener todos los comentarios
+    comentarios = ComentarioUsuario.objects.filter(receptor=usuario_seleccionado)
+
+    if not es_dueño_del_perfil:
+        # Si no es el dueño, filtrar los comentarios por tipo 'Publico'
+        comentarios = comentarios.filter(tipo_mensaje='Publico')
+
+    if request.method == 'POST':
+        form = ComentarioUsuarioForm(request.POST, instance=ComentarioUsuario(emisor=request.user, receptor=usuario_seleccionado))
+        if form.is_valid():
+            form.save()
+            return redirect('perfil_usuario', usuario_id=usuario_id)
+
+    else:
+        form = ComentarioUsuarioForm()
+
     return render(request, 'redsocial/perfil_usuario.html', {
         'perfil': usuario_seleccionado,
         'comentarios': comentarios,
-        'perfil_info': usuario_seleccionado_info
+        'perfil_info': usuario_seleccionado_info,
+        'form': form,
+        'es_dueño_del_perfil': es_dueño_del_perfil,
     })
-
-
 
 
 @login_required
@@ -129,49 +143,6 @@ def perfil_mascota(request, mascota_id):
     return render(request, 'redsocial/perfil_mascota.html', {'perfil': mascota, 'tipo_usuario': tipo_usuario, 'form': form, 'mensajes': mensajes})
 
 
-
-'''@login_required
-def perfil_mascota(request, mascota_id):
-    mascota = get_object_or_404(Mascota, id=mascota_id)
-    tipo_usuario = None 
-    if request.user.is_authenticated:
-        try:
-            tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
-            tipo_usuario = tipo_usuario_obj.tipo_usuario
-        except TipoUsuario.DoesNotExist:
-            tipo_usuario = None
-
-    if request.method == 'POST':
-        form = MensajeForm(request.POST)
-        if form.is_valid():
-            nuevo_mensaje = form.save(commit=False)
-            nuevo_mensaje.emisor = request.user
-            nuevo_mensaje.receptor = mascota
-            nuevo_mensaje.save()
-    else:
-        form = MensajeForm()
-
-    mensajes = Mensaje.objects.filter(receptor=mascota) 
-    return render(request, 'redsocial/perfil_mascota.html', {'perfil': mascota, 'tipo_usuario': tipo_usuario, 'form': form, 'mensajes': mensajes})
-'''
-'''@login_required
-def publicar_mensaje_mascota(request, mascota_id):
-    receptor = Mascota.objects.get(id=mascota_id)  
-    
-    if request.method == 'POST':
-        form = MensajeForm(request.POST)
-        if form.is_valid():
-            nuevo_mensaje = form.save(commit=False)
-            nuevo_mensaje.emisor = request.user
-            nuevo_mensaje.receptor = receptor  
-            nuevo_mensaje.save()
-            return redirect('publicar_mensaje_mascota', mascota_id=mascota_id) 
-    else:
-        form = MensajeForm()
-
-    mensajes = Mensaje.objects.filter(receptor=receptor) 
-    return render(request, 'redsocial/perfil_mascota.html', {'form': form, 'mensajes': mensajes, 'mascota_id': mascota_id})
-'''
 
 
 
@@ -229,16 +200,3 @@ def detalle_img_mascota(request, imagen_id):
 
 
 
-'''def publicar_mensaje_usuario(request, receptor_id):
-    receptor = get_object_or_404(DuenoMascota, id=receptor_id)
-
-    if request.method == 'POST':
-        form = ComentarioUsuarioForm(request.POST, instance=ComentarioUsuario(emisor=request.user, receptor=receptor))
-        if form.is_valid():
-            form.save()
-            return redirect('perfil_usuario', usuario_id=receptor_id)
-
-    else:
-        form = ComentarioUsuarioForm()
-
-    return render(request, 'redsocial/perfil_usuario.html', {'form': form, 'receptor': receptor})'''

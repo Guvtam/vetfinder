@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import mi_red, buscar_amigo, crear_publicacion, perfil_mascota, perfil_usuario, ver_galeria_mascota, detalle_img_mascota#, publicar_mensaje_mascota#, publicar_mensaje_usuario
+from .views import mi_red, buscar_amigo, crear_publicacion, perfil_mascota, perfil_usuario, ver_galeria_mascota, detalle_img_mascota#, publicar_mensaje_usuario#, publicar_mensaje_mascota
 
 
 
@@ -13,7 +13,7 @@ urlpatterns=[
     path('galeria-mascota/<int:mascota_id>/',ver_galeria_mascota, name='galeria_mascota'),
     path('galeria-mascota/img/<int:imagen_id>/',detalle_img_mascota, name='detalle_img_mascota'),
     #path('perfil-mascota/mensajes/<int:mascota_id>/',publicar_mensaje_mascota, name='publicar_mensaje_mascota'),
-  #  path('perfil-usuario/<int:usuario_id>/comentar/',publicar_mensaje_usuario, name='publicar_mensaje_usuario'),
+    #path('perfil-usuario/<int:usuario_id>/comentar/',publicar_mensaje_usuario, name='publicar_mensaje_usuario'),
    
     
     

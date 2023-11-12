@@ -77,28 +77,33 @@ class ComentarioForm(forms.ModelForm):
             'contenido': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribe tu mensaje aquí...'}),
         }'''
 
+
 class MensajeForm(forms.ModelForm):
     class Meta:
         model = Mensaje
-        fields = ['contenido', 'tipo_mensaje']  # Agrega el campo 'tipo_mensaje' al formulario
+        fields = ['contenido', 'tipo_mensaje']
 
         widgets = {
             'contenido': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribe tu mensaje aquí...'}),
-            'tipo_mensaje': forms.Select(attrs={'class': 'form-control'}),  # Agrega un widget para el campo 'tipo_mensaje'
+            'tipo_mensaje': forms.Select(attrs={'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['tipo_mensaje'].widget.choices = Mensaje.TIPO_MENSAJE  # Configura las opciones para el campo 'tipo_mensaje'
-
+        self.fields['tipo_mensaje'].widget.choices = Mensaje.TIPO_MENSAJE
 
 
 class ComentarioUsuarioForm(forms.ModelForm):
     class Meta:
         model = ComentarioUsuario
-        fields = ['contenido']
+        fields = ['contenido', 'tipo_mensaje']
 
         widgets = {
-            'contenido': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribele un mensaje aquí...'}),
+            'contenido': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribe tu mensaje aquí...'}),
+            'tipo_mensaje': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tipo_mensaje'].widget.choices = ComentarioUsuario.TIPO_MENSAJE
 

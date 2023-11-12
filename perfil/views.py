@@ -4,6 +4,7 @@ from acceso.forms import MascotaForm
 from servicios.models import Servicio, Calificacion
 from .forms import EditarPerfilForm, EditarServicioForm, EditarMascotaForm
 from django.contrib.auth.decorators import login_required
+from redsocial.models import ComentarioUsuario
 
 # Create your views here.
 @login_required
@@ -11,15 +12,18 @@ def mi_perfil(request):
     user = request.user
     tipo_usuario = None  # Inicializa tipo_usuario como None por defecto
     user_id = None
+    comentarios = None
+
     # Verifica si el usuario está autenticado y si tiene un TipoUsuario asociado
     if user.is_authenticated:
         user_id = user.id
         try:
             tipo_usuario = TipoUsuario.objects.get(usuario=user).tipo_usuario
+            comentarios = ComentarioUsuario.objects.filter(receptor=user)
         except TipoUsuario.DoesNotExist:
             tipo_usuario = None
 
-    return render(request, 'perfil/mi_perfil.html', {'user': user, 'tipo_usuario': tipo_usuario, 'user_id': user_id})
+    return render(request, 'perfil/mi_perfil.html', {'user': user, 'tipo_usuario': tipo_usuario, 'user_id': user_id, 'comentarios': comentarios})
 
 
 @login_required

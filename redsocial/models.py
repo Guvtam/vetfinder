@@ -64,10 +64,15 @@ class Mensaje(models.Model):
 
     
 class ComentarioUsuario(models.Model):
+    TIPO_MENSAJE = [
+        ('Publico', 'Publico'),
+        ('Privado', 'Privado'),
+    ]
     emisor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE, related_name='comentarios_enviados')
     receptor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE, related_name='comentarios_recibidos')
     contenido = models.TextField()
     fecha_envio = models.DateTimeField(auto_now_add=True)
+    tipo_mensaje = models.CharField(max_length=20, choices=TIPO_MENSAJE, default=None)
 
     def __str__(self):
         return f"Comentario de {self.emisor.username} a {self.receptor.username}"

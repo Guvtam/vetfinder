@@ -47,5 +47,18 @@
             
         </div>
     </div>
+
+    <div>
+        <h3>Comentarios:</h3>
+        <ul>
+            {% for comentario in comentarios %}
+                <li>
+                    <strong>{{ comentario.emisor.username }}:</strong> {{ comentario.contenido }}
+                </li>
+            {% empty %}
+                <li>No hay comentarios aún.</li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}
