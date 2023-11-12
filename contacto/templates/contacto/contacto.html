@@ -1,9 +1,17 @@
 {% extends 'home/base.html' %}
 
-{% block title %}- Contacto {% endblock%}
+{% block title %}- Contacto {% endblock %}
 
 {% block content %}
     <div id="contacto">
         <h1 class="text-center">Contacto</h1>
+        <p class="text-center">Tienes algo que decirnos. Alguna queja o sugerencia. Dejanos tu mensaje.</p>
+        <form method="post" style="width: 60%;margin:auto;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+            </div>
+        </form>
     </div>
 {% endblock %}
