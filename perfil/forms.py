@@ -19,9 +19,9 @@ class EditarPerfilForm(UserChangeForm):
     genero = forms.ChoiceField(
         required=False,
         choices=[
+            ('','Seleccionar Genero'),
             ('Masculino', 'Masculino'),
             ('Femenino', 'Femenino'),
-            ('No especificar', 'No especificar'),
             ('Prefiero no decirlo', 'Prefiero no decirlo'),
             ('Otro', 'Otro'),
         ],

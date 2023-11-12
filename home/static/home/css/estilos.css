@@ -161,6 +161,16 @@
     width: 70%;
     margin: auto;
 }
+#imagen-perfil {
+    width: 150px; /* Ancho inicial de la imagen */
+}
+
+/* Escalar la imagen al pasar el cursor sobre ella */
+#imagen-perfil:hover {
+    transform: scale(1.2); /* Escala la imagen al 120% */
+    transition: transform 0.3s; /* Agrega la transición en el hover */
+}
+
 
 #footer {
     

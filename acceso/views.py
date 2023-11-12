@@ -1,10 +1,11 @@
 from django.contrib.auth import login
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .forms import RegistroUsuarioForm, MascotaForm, LoginForm, TipoUsuarioForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .models import Mascota , TipoUsuario
+from .models import Mascota , TipoUsuario, Especie, Raza
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -32,6 +33,8 @@ def inicio_sesion(request):
                     return redirect('mi_mascota')
                 elif tipo_usuario == 'servicios':
                     return redirect('mis_servicios')
+                elif tipo_usuario == 'ambos' :
+                    return('mi_perfil')
                 else:
                     return redirect('home')  # Redirige predeterminadamente
 
@@ -89,16 +92,18 @@ def seleccionar_tipo_usuario(request):
                 return redirect('agregar_mascota')  # Redirige al registro de mascota
             elif tipo_usuario.tipo_usuario == 'servicios':
                 return redirect('registrar_servicio')  # Redirige al crear el servicio
+            elif tipo_usuario.tipo_usuario == 'ambos' :
+                return redirect('mi_perfil')
     else:
         tipo_usuario_form = TipoUsuarioForm()
     
     return render(request, 'acceso/tipoUsuario.html', {'tipo_usuario_form': tipo_usuario_form})
 
+
 def agregar_mascota(request):
     user = request.user
-    tipo_usuario = None  # Inicializa tipo_usuario como None por defecto
+    tipo_usuario = None
 
-    # Verifica si el usuario está autenticado y si tiene un TipoUsuario asociado
     if user.is_authenticated:
         try:
             tipo_usuario = TipoUsuario.objects.get(usuario=user).tipo_usuario
@@ -109,14 +114,19 @@ def agregar_mascota(request):
         form = MascotaForm(request.POST, request.FILES)
         if form.is_valid():
             mascota = form.save(commit=False)
-            mascota.dueno = user  # Asigna directamente el usuario actual
+            mascota.dueno = user
             mascota.save()
             return redirect('mi_mascota')
     else:
         form = MascotaForm()
+        especies = Especie.objects.all()
         
-    return render(request, 'acceso/registroMascota.html', {'form': form, 'tipo_usuario': tipo_usuario})
+        return render(request, 'acceso/registroMascota.html', {'form': form, 'tipo_usuario': tipo_usuario, 'especies': especies})
 
+
+def obtener_raza(request, especie_id):
+    razas = Raza.objects.filter(especie_id=especie_id).values('id', 'nombre')  
+    return JsonResponse(list(razas), safe=False)
 
 def cerrar_sesion(request):
     logout(request)

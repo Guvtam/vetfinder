@@ -1,20 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import DuenoMascota, Mascota, TipoUsuario
+from .models import DuenoMascota, Mascota, TipoUsuario, Especie, Raza
 from captcha.fields import ReCaptchaField
 
 
 
-'''class LoginForm(forms.Form):
-    username = forms.CharField(
-        max_length=100,
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
-    )'''
-    
+
 class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=150,
@@ -63,7 +54,7 @@ class RegistroUsuarioForm(UserCreationForm):
     )
     genero = forms.ChoiceField(
         required=False,
-        choices=[('Masculino', 'Masculino'), ('Femenino', 'Femenino'), 
+        choices=[('','Seleccionar Genero'),('Masculino', 'Masculino'), ('Femenino', 'Femenino'), 
         ('No especificar', 'No especificar'),
         ('Prefiero no decirlo', 'Prefiero no decirlo'),('Otro', 'Otro'),],
         widget=forms.Select(attrs={'class': 'form-control','placeholder': 'Selecciona tu género'}),
@@ -106,24 +97,26 @@ class MascotaForm(forms.ModelForm):
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de mascota'}),
     )
-    especie = forms.CharField(
-        max_length=150,  
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Especie'}),
+    especie = forms.ModelChoiceField(
+        queryset=Especie.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
-    raza = forms.CharField(
-        max_length=150,  
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Raza'}),
+
+    raza = forms.ModelChoiceField(
+        queryset=Raza.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
     fecha_nacimiento_mascota = forms.DateField(
         widget=forms.TextInput(attrs={'class': 'form-control','type': 'date', 'placeholder': 'Fecha de Nacimiento'}),
     )
     genero_mascota = forms.ChoiceField(
-        choices=[('Macho', 'Macho'), ('Hembra', 'Hembra'), 
-        ],
-        widget=forms.Select(attrs={'class': 'form-control','placeholder': 'Selecciona el género de tu mascota'}),
+    choices=[('', 'Selecciona el sexo'), ('Macho', 'Macho'), ('Hembra', 'Hembra')],
+    widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Selecciona el género de tu mascota'}),
     )
+    fecha_nacimiento_mascota = forms.DateField(
+        widget=forms.TextInput(attrs={'class': 'form-control','type': 'date', 'placeholder': 'Fecha de Nacimiento'}),
+    )
+    
     color = forms.CharField(
         max_length=150,  
         required=True,

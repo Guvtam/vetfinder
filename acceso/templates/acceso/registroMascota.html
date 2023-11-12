@@ -1,59 +1,100 @@
 {% extends 'home/base.html' %}
 
-
-
 {% block content %}
-
 <div id="mascota-registro">
-    <div class="container" id="form-mascota" >
-
+    <div class="container" id="form-mascota">
         <h1 class="text-center">Registra tu Mascota</h1>
-        
         <form method="post" style="width:70%; margin:auto" enctype="multipart/form-data">
             {% csrf_token %}
-           <!-- {{ form.as_p }}-->
-           <div class="form-group">
-            <label for="{{ form.nombre.id_for_label }}"></label>
-            {{ form.nombre }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.especie.id_for_label }}"></label>
-            {{ form.especie }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.raza.id_for_label }}"></label>
-            {{ form.raza }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.fecha_nacimiento_mascota.id_for_label }}"></label>
-            {{ form.fecha_nacimiento_mascota }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.genero_mascota.id_for_label }}"></label>
-            {{ form.genero_mascota }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.color.id_for_label }}"></label>
-            {{ form.color }}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.imagen.id_for_label }}"></label>
-            {{ form.imagen }}
             
-        </div>
-        <div class="form-group">
-            <label for="{{ form.identificacion.id_for_label }}"></label>
-            {{ form.identificacion }}
-        </div>
-        <br>
+            <div class="form-group">
+                <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+                {{ form.nombre }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.especie.id_for_label }}">Especie:</label>
+                <select id="especie" name="especie" class="form-control">
+                    <option value="" selected>Selecciona la especie</option>
+                    {% for especie in especies %}
+                        <option value="{{ especie.id }}">{{ especie.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.raza.id_for_label }}">Raza:</label>
+                <select id="raza" name="raza" class="form-control">
+                    <option value="" selected>Selecciona la raza</option>
+                    {% for raza in razas %}
+                        <option value="{{ raza.id }}">{{ raza.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.fecha_nacimiento_mascota.id_for_label }}">Fecha de Nacimiento:</label>
+                {{ form.fecha_nacimiento_mascota }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.genero_mascota.id_for_label }}">Género:</label>
+                {{ form.genero_mascota }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.color.id_for_label }}">Color:</label>
+                {{ form.color }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
+                {{ form.imagen }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.identificacion.id_for_label }}">Identificación:</label>
+                {{ form.identificacion }}
+            </div>
+
+            <br>
+
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Registrar</button>
                 <a class="btn btn-danger" href="{% url 'cancelar' %}">Cancelar</a>
             </div>
-            
         </form>
-        
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#especie').change(function() {
+        var especieId = $(this).val(); 
+
+        $.ajax({
+            url: '/obtener-raza/' + especieId + '/',  
+            type: 'GET',
+            success: function(data) {
+                var razasDropdown = $('#raza');  
+
+                
+                razasDropdown.empty();
+                razasDropdown.append('<option value="" selected>Selecciona la raza</option>');
+
+                data.forEach(function(raza) {
+                    razasDropdown.append('<option value="' + raza.id + '">' + raza.nombre + '</option>');
+                });
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
+
+
+

@@ -13,7 +13,7 @@
         <div class="col-md-6">
             <div class="text-center">
                 {% if mascota.imagen %}
-                <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" style="border-radius: 50%; max-width: 200px;">
+                <img src="{{ mascota.imagen.url }}" id="imagen-perfil" alt="{{ mascota.nombre }}" style="border-radius: 50%; max-width: 200px;">
                 {% else %}
                 <p>Esta mascota no tiene una imagen registrada.</p>
                 {% endif %}
