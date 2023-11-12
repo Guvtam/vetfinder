@@ -1,0 +1,19 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Calificaciones del Servicio "{{ servicio.nombre }}"</h1>
+        <div style="margin-left:40px;padding:10px;">
+            <a href="{% url 'mis_servicios' %}" class="btn btn-warning">Mis Servicios</a>
+        </div>
+        <ul>
+            {% for calificacion in calificaciones %}
+                <li>
+                    Usuario: {{ calificacion.usuario.username }}<br>
+                    Calificación: {{ calificacion.calificacion }}<br>
+                    Comentario: {{ calificacion.comentario }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

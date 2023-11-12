@@ -1,23 +1,28 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from acceso.models import Mascota, TipoUsuario
 from acceso.forms import MascotaForm
-from servicios.models import Servicio
+from servicios.models import Servicio, Calificacion
 from .forms import EditarPerfilForm, EditarServicioForm, EditarMascotaForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def mi_perfil(request):
     user = request.user
     tipo_usuario = None  # Inicializa tipo_usuario como None por defecto
-
+    user_id = None
     # Verifica si el usuario está autenticado y si tiene un TipoUsuario asociado
     if user.is_authenticated:
+        user_id = user.id
         try:
             tipo_usuario = TipoUsuario.objects.get(usuario=user).tipo_usuario
         except TipoUsuario.DoesNotExist:
             tipo_usuario = None
 
-    return render(request, 'perfil/mi_perfil.html', {'user': user, 'tipo_usuario': tipo_usuario})
+    return render(request, 'perfil/mi_perfil.html', {'user': user, 'tipo_usuario': tipo_usuario, 'user_id': user_id})
 
+
+@login_required
 def mi_mascota(request):
     user = request.user
     mascotas = Mascota.objects.filter(dueno=user)
@@ -32,13 +37,17 @@ def mi_mascota(request):
 
     return render(request, 'perfil/mascota.html', {'mascotas': mascotas, 'user': user, 'tipo_usuario': tipo_usuario})
 
-   
+
+
+@login_required
 def mis_servicios(request):
     # Inicializa tipo_usuario como None por defecto
     tipo_usuario = None
+    user_id = None
 
     # Verifica si el usuario está autenticado
     if request.user.is_authenticated:
+        user_id = request.user.id
         # Recupera el tipo de usuario asociado al usuario actual
         try:
             tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
@@ -51,11 +60,11 @@ def mis_servicios(request):
     else:
         servicios = None  # El usuario no está autenticado, por lo que no hay servicios que mostrar
 
-    return render(request, 'perfil/mis_servicios.html', {'servicios': servicios, 'tipo_usuario': tipo_usuario})
+    return render(request, 'perfil/mis_servicios.html', {'servicios': servicios, 'tipo_usuario': tipo_usuario, 'user_id': user_id})
 
 
 
-
+@login_required
 def editar_miperfil(request):
     user = request.user
     tipo_usuario = None  # Inicializa tipo_usuario como None por defecto
@@ -78,6 +87,8 @@ def editar_miperfil(request):
     return render(request, 'perfil/editar_perfil.html', {'form': form, 'tipo_usuario': tipo_usuario})
 
 
+
+@login_required
 def editar_mascota(request, mascota_id):
     mascota = Mascota.objects.get(id=mascota_id)
 
@@ -91,6 +102,9 @@ def editar_mascota(request, mascota_id):
 
     return render(request, 'perfil/editar_mascota.html', {'form': form, 'mascota': mascota})
 
+
+
+@login_required
 def editar_servicio(request, servicio_id):
     servicio = Servicio.objects.get(id=servicio_id)
 
@@ -103,3 +117,12 @@ def editar_servicio(request, servicio_id):
         form = EditarServicioForm(instance=servicio)
 
     return render(request, 'perfil/editar_servicio.html', {'form': form, 'servicio': servicio})
+
+
+
+@login_required
+def ver_calificacion_servicios(request, servicio_id):
+    servicio = get_object_or_404(Servicio, id=servicio_id)
+    calificaciones = Calificacion.objects.filter(servicio=servicio)
+
+    return render(request, 'perfil/ver_calificacion_servicios.html', {'servicio': servicio, 'calificaciones': calificaciones})

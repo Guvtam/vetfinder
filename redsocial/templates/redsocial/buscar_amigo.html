@@ -2,57 +2,72 @@
 
 {% block content %}
 
-<div class="text-center">
-    <h1>Mi Red Social</h1>
-</div>
-<div style="width: 60%; margin: auto;">
-    <form method="get" action="{% url 'buscar_amigo' %}">
-        {{ form.query }}
-        {{ form.search_by }}
-        <button type="submit" class="btn btn-primary">Buscar Amigo</button>
-    </form>
-</div>
-
-<!-- Agregar la lista de resultados aquí como tarjetas -->
-{% if resultados %}
-    <h2>Resultados de la búsqueda:</h2>
-    <div class="row">
-        {% if form.search_by.value == 'usuario' %}
-            {% for usuario in resultados %}
-                <div class="col-md-4 mb-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ usuario.imagen_perfil.url }}" alt="{{ usuario.username }}" class="imagen-redonda">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ usuario.username }}</h5>
-                            <p class="card-text">Nombre: {{ usuario.first_name }} {{ usuario.last_name }}</p>
-                            
-                            <a href="{% url 'perfil_usuario' usuario.id %}" class="btn btn-warning">Ver Perfil</a>
+    <div class="container" style="width: 80%;margin:auto;">
+        <div class="text-center">
+            <h1>Mi Red Social</h1>
+        </div>
+        <div style="padding: 10px;">
+            <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
+            <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
+            
+            
+            
+            
+        </div>
+        <div style="width: 60%; margin: auto;">
+            <form method="get" action="{% url 'buscar_amigo' %}">
+                {{ form.query }}
+                {{ form.search_by }}
+                <button type="submit" class="btn btn-primary">Buscar Amigo</button>
+            </form>
+        </div>
+        
+        
+        <!-- Agregar la lista de resultados aquí como tarjetas -->
+        <div class="container" style="width: 90%;margin:auto;">
+            {% if resultados %}
+            <h2>Resultados de la búsqueda:</h2>
+            <div class="row" >
+                {% if form.search_by.value == 'usuario' %}
+                    {% for usuario in resultados %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card" style="width: 18rem;">
+                                <img src="{{ usuario.imagen_perfil.url }}" alt="{{ usuario.username }}" class="imagen-redonda">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ usuario.username }}</h5>
+                                    <p class="card-text">Nombre: {{ usuario.first_name }} {{ usuario.last_name }}</p>
+                                    
+                                    <a href="{% url 'perfil_usuario' usuario.id %}" class="btn btn-warning">Ver Perfil</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            {% endfor %}
+                    {% endfor %}
+                {% else %}
+        </div>
+                    {# Mostrar datos de mascotas si se busca por nombre de mascota #}
+                    <div class="container" style="width: 90%;margin:auto;">
+                        {% for mascota in resultados %}
+                        <div class="col-md-4 mb-4" >
+                            <div class="card" style="width: 18rem;">
+                                <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" class="imagen-redonda" >
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ mascota.nombre }}</h5>
+                                    <p class="card-text">Especie: {{ mascota.especie }}</p>
+                                    <p class="card-text">Raza: {{ mascota.raza }}</p>
+                                    <p class="card-text">Género: {{ mascota.get_genero_mascota_display }}</p>
+                                    <p class="card-text">Color: {{ mascota.color }}</p>
+                                    
+                                    <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-primary">Ver Perfil</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         {% else %}
-            {# Mostrar datos de mascotas si se busca por nombre de mascota #}
-            {% for mascota in resultados %}
-                <div class="col-md-4 mb-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" class="imagen-redonda">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ mascota.nombre }}</h5>
-                            <p class="card-text">Especie: {{ mascota.especie }}</p>
-                            <p class="card-text">Raza: {{ mascota.raza }}</p>
-                            <p class="card-text">Género: {{ mascota.get_genero_mascota_display }}</p>
-                            <p class="card-text">Color: {{ mascota.color }}</p>
-                            
-                            <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-primary">Ver Perfil</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+            <p>No se encontraron resultados.</p>
         {% endif %}
+                    </div>
     </div>
-{% else %}
-    <p>No se encontraron resultados.</p>
-{% endif %}
 
 {% endblock %}

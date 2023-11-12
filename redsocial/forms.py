@@ -34,7 +34,7 @@ class BusquedaAmigoForm(forms.Form):
     query = forms.CharField(
         max_length=100,
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Buscar por'}),
+        widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Ingresa nombre de usuario o mascota'}),
     )
 
     search_by = forms.ChoiceField(
@@ -68,14 +68,29 @@ class ComentarioForm(forms.ModelForm):
             'contenido': 'Comentario',
         }
 
-class MensajeForm(forms.ModelForm):
+'''class MensajeForm(forms.ModelForm):
     class Meta:
         model = Mensaje
         fields = ['contenido']
 
         widgets = {
             'contenido': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribe tu mensaje aquí...'}),
+        }'''
+
+class MensajeForm(forms.ModelForm):
+    class Meta:
+        model = Mensaje
+        fields = ['contenido', 'tipo_mensaje']  # Agrega el campo 'tipo_mensaje' al formulario
+
+        widgets = {
+            'contenido': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribe tu mensaje aquí...'}),
+            'tipo_mensaje': forms.Select(attrs={'class': 'form-control'}),  # Agrega un widget para el campo 'tipo_mensaje'
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tipo_mensaje'].widget.choices = Mensaje.TIPO_MENSAJE  # Configura las opciones para el campo 'tipo_mensaje'
+
 
 
 class ComentarioUsuarioForm(forms.ModelForm):

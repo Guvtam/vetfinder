@@ -167,10 +167,18 @@
 
 /* Escalar la imagen al pasar el cursor sobre ella */
 #imagen-perfil:hover {
-    transform: scale(1.2); /* Escala la imagen al 120% */
+    transform: scale(1.9); /* Escala la imagen al 120% */
     transition: transform 0.3s; /* Agrega la transición en el hover */
 }
+#amigos {
+    width: 250px; /* Ancho inicial de la imagen */
+}
 
+/* Escalar la imagen al pasar el cursor sobre ella */
+#amigos:hover {
+    transform: scale(1.9); /* Escala la imagen al 120% */
+    transition: transform 0.3s; /* Agrega la transición en el hover */
+}
 
 #footer {
     
@@ -180,4 +188,13 @@
     color: white;
     text-align: center;
     padding: 10px;
+}
+
+
+.img-zoom {
+    transition: transform 0.3s ease; 
+}
+
+.img-zoom:hover {
+    transform: scale(1.1); 
 }

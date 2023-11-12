@@ -14,7 +14,7 @@ class Publicacion(models.Model):
     tipo_actividad = models.CharField(max_length=10, choices=TIPOS_ACTIVIDAD, default=None)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
-
+#modelo para guardar las fotos
 class GaleriaMascota(models.Model):
     mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
     autor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE)
@@ -25,7 +25,7 @@ class GaleriaMascota(models.Model):
     
    
     
-    
+    #modelo comentario imagenes 
 class Comentario(models.Model):
     autor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE)
     contenido = models.TextField(default=None)
@@ -37,7 +37,7 @@ class Comentario(models.Model):
 
 
 
-class Mensaje(models.Model):
+'''class Mensaje(models.Model):
     emisor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE)
     receptor = models.ForeignKey(Mascota, on_delete=models.CASCADE)
     contenido = models.TextField()
@@ -45,7 +45,23 @@ class Mensaje(models.Model):
 
     def __str__(self):
         return f"Mensaje de {self.emisor.username} a {self.receptor.nombre}"
-    
+    '''
+
+
+class Mensaje(models.Model):
+    TIPO_MENSAJE = [
+        ('Publico', 'Publico'),
+        ('Privado', 'Privado'),
+    ]
+    emisor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE)
+    receptor = models.ForeignKey(Mascota, on_delete=models.CASCADE)
+    contenido = models.TextField()
+    fecha_envio = models.DateTimeField(auto_now_add=True)
+    tipo_mensaje = models.CharField(max_length=20, choices=TIPO_MENSAJE, default=None)  
+
+    def __str__(self):
+        return f"mensaje de {self.emisor.username} a {self.receptor.nombre}"
+
     
 class ComentarioUsuario(models.Model):
     emisor = models.ForeignKey(DuenoMascota, on_delete=models.CASCADE, related_name='comentarios_enviados')

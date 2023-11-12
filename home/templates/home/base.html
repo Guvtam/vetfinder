@@ -59,9 +59,10 @@
             Hola {{ user.username }}
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="{% url 'mi_perfil' %}">Mis Datos</a></li>
+            <li><a class="dropdown-item" href="{% url 'mi_perfil' %}">Mi Perfil</a></li>
+            <!--
             <li><a class="dropdown-item" href="{% url 'mi_red' %}">Mi Red </a></li>
-           
+           -->
             {% if user.is_superuser %}
                 <!-- Mostrar todos los enlaces para superusuarios -->
                 <li><a class="dropdown-item" href="{% url 'mi_mascota' %}">Mi Mascota</a></li>

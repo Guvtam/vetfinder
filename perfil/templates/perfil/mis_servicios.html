@@ -6,7 +6,9 @@
         Mis Servicios
     </h1>
     <div style="margin-left:60px;padding:10px;">
-        <a href="{% url 'registrar_servicio' %}" class="btn btn-warning">Agregar Servicio</a>
+        <a href="{% url 'registrar_servicio' %}" class="btn btn-success">Agregar Servicio</a>
+        
+        <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
     </div>
     <div class="row">
         {% for servicio in servicios %}
@@ -22,6 +24,8 @@
                     </div>
                     
                     <a href="{% url 'editar_servicio' servicio.id  %}" class="btn btn-warning">Editar</a>
+                    <br>
+                    <a href="{% url 'calificacion_servicios' servicio.id %}" class="btn btn-warning">Ver calificaciones</a>
             </div>
             
         </div>

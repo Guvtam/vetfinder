@@ -9,9 +9,12 @@
         {% if user.is_authenticated and user == perfil.dueno %}
             <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
             {% endif %}
-        
+
+        <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
         <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
-        <a href="{% url 'publicar_mensaje_mascota' perfil.id %}" class="btn btn-warning">Publicar Mensaje</a>
+        
+        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
+        
         {% if user.is_authenticated and user == perfil.dueno %}
             <a href="#" class="btn btn-warning">Ficha Clínica</a>
         {% endif %}
@@ -23,10 +26,40 @@
                 <h5 class="card-title">{{ perfil.nombre }}</h5>
                 <p class="card-text">Especie: {{ perfil.especie }}</p>
                 <p class="card-text">Raza: {{ perfil.raza }}</p>
-                <p class="card-text">Género: {{ perfil.get_genero_perfil_display }}</p>
+                <p class="card-text">Género: {{ perfil.genero_mascota }}</p>
                 <p class="card-text">Color: {{ perfil.color }}</p>
             </div>
         </div>
+    </div>
+    <div >
+        
+            
+               
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Columna para el formulario de envío de mensajes -->
+                    <div style="margin-top: 20px;">
+                        <h2 class="text-center">Deja tu mensaje</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <!-- Columna para mostrar los mensajes -->
+                    <h2 class="text-center">Mensajes Recibidos:</h2>
+                    <ul>
+                        {% for mensaje in mensajes %}
+                            {% if mensaje.tipo_mensaje == 'Publico' or user == mensaje.emisor or user == mensaje.receptor.dueno %}
+                                <li>{{ mensaje.contenido }} - {{ mensaje.emisor }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+       
     </div>
 </div>
 {% endblock %}

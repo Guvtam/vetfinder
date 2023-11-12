@@ -2,13 +2,14 @@ from django import forms
 from .models import Servicio, Calificacion
 
 class ServicioForm(forms.ModelForm):
+    CATEGORIAS = [('', 'Selecciona una categoría')] + Servicio.CATEGORIAS
     nombre = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del servicio'}),
     )
     categoria = forms.ChoiceField(
-        choices=Servicio.CATEGORIAS,
-        widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Selecciona la categoría'}),
+        choices=CATEGORIAS,
+        widget=forms.Select(attrs={'class': 'form-control'}),
     )
     direccion = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección'}),

@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import GaleriaMascota, Comentario, Mensaje, ComentarioUsuario
 from acceso.models import TipoUsuario
+from django.contrib.auth.decorators import login_required
 
+
+
+@login_required
 def mi_red(request):
     tipo_usuario = None
     user_id = None  
@@ -22,7 +26,7 @@ def mi_red(request):
     return render(request, 'redsocial/mi_red.html', {'formulario': formulario, 'tipo_usuario': tipo_usuario, 'user_id': user_id})
 
 
-
+@login_required
 def crear_publicacion(request):
     formulario = PublicacionForm()
     
@@ -39,7 +43,7 @@ def crear_publicacion(request):
 
 
 
-
+@login_required
 def buscar_amigo(request):
     form = BusquedaAmigoForm()
     resultados = None
@@ -72,44 +76,61 @@ def buscar_amigo(request):
 
 
 
+    
+    
+
+@login_required
 def perfil_usuario(request, usuario_id):
-    usuario = get_object_or_404(DuenoMascota, id=usuario_id)
-    tipo_usuario = None
-    user_info = {}  # Inicializa un diccionario para la información no frágil
+    usuario_seleccionado = get_object_or_404(DuenoMascota, id=usuario_id)
+    comentarios = ComentarioUsuario.objects.filter(receptor=usuario_seleccionado)
+    usuario_seleccionado_info = {
+        'username': usuario_seleccionado.username,
+        'email': usuario_seleccionado.email,
+        # Otros campos que quieras mostrar del usuario seleccionado
+    }
+    
+    return render(request, 'redsocial/perfil_usuario.html', {
+        'perfil': usuario_seleccionado,
+        'comentarios': comentarios,
+        'perfil_info': usuario_seleccionado_info
+    })
+
+
+
+
+@login_required
+def perfil_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, id=mascota_id)
+    tipo_usuario = None 
 
     if request.user.is_authenticated:
         try:
             tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
             tipo_usuario = tipo_usuario_obj.tipo_usuario
-            user_info = {
-                'username': request.user.username,
-                'email': request.user.email,
-                'date_joined': request.user.date_joined,
-            }
         except TipoUsuario.DoesNotExist:
             tipo_usuario = None
 
-    if request.method == 'POST':
-        form = ComentarioUsuarioForm(request.POST)
-        if form.is_valid():
-            # Procesar el formulario y guardar el comentario
-            comentario = form.save(commit=False)
-            comentario.emisor = request.user
-            comentario.receptor = usuario
-            comentario.save()
-            # Redirigir a la misma página después de procesar el formulario
-            return redirect('perfil_usuario', usuario_id=usuario_id)
-    else:
-        form = ComentarioUsuarioForm()
-    comentarios = ComentarioUsuario.objects.filter(receptor=usuario)
-    return render(request, 'redsocial/perfil_usuario.html', {
-        'perfil': usuario,
-        'tipo_usuario': tipo_usuario,
-        'user_info': user_info,  # Pasar la información no frágil del usuario
-        'form': form,
-        'comentarios': comentarios
-    })
+    mensajes = Mensaje.objects.filter(receptor=mascota)
 
+    # Permitir que el dueño de la mascota vea tanto mensajes públicos como privados
+    if tipo_usuario == 'Dueño' and request.user == mascota.dueno:
+        mensajes = Mensaje.objects.filter(receptor=mascota)
+
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+        if form.is_valid():
+            nuevo_mensaje = form.save(commit=False)
+            nuevo_mensaje.emisor = request.user
+            nuevo_mensaje.receptor = mascota
+            nuevo_mensaje.save()
+    else:
+        form = MensajeForm()
+
+    return render(request, 'redsocial/perfil_mascota.html', {'perfil': mascota, 'tipo_usuario': tipo_usuario, 'form': form, 'mensajes': mensajes})
+
+
+
+'''@login_required
 def perfil_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id=mascota_id)
     tipo_usuario = None 
@@ -120,12 +141,41 @@ def perfil_mascota(request, mascota_id):
         except TipoUsuario.DoesNotExist:
             tipo_usuario = None
 
-    return render(request, 'redsocial/perfil_mascota.html', {'perfil': mascota, 'tipo_usuario': tipo_usuario})
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+        if form.is_valid():
+            nuevo_mensaje = form.save(commit=False)
+            nuevo_mensaje.emisor = request.user
+            nuevo_mensaje.receptor = mascota
+            nuevo_mensaje.save()
+    else:
+        form = MensajeForm()
+
+    mensajes = Mensaje.objects.filter(receptor=mascota) 
+    return render(request, 'redsocial/perfil_mascota.html', {'perfil': mascota, 'tipo_usuario': tipo_usuario, 'form': form, 'mensajes': mensajes})
+'''
+'''@login_required
+def publicar_mensaje_mascota(request, mascota_id):
+    receptor = Mascota.objects.get(id=mascota_id)  
+    
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+        if form.is_valid():
+            nuevo_mensaje = form.save(commit=False)
+            nuevo_mensaje.emisor = request.user
+            nuevo_mensaje.receptor = receptor  
+            nuevo_mensaje.save()
+            return redirect('publicar_mensaje_mascota', mascota_id=mascota_id) 
+    else:
+        form = MensajeForm()
+
+    mensajes = Mensaje.objects.filter(receptor=receptor) 
+    return render(request, 'redsocial/perfil_mascota.html', {'form': form, 'mensajes': mensajes, 'mascota_id': mascota_id})
+'''
 
 
 
-
-
+@login_required
 def ver_galeria_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id=mascota_id)
     form = GaleriaMascotaForm()
@@ -151,6 +201,9 @@ def ver_galeria_mascota(request, mascota_id):
     
     return render(request, 'redsocial/galeria.html', {'mascota': mascota, 'galeria': galeria, 'form': form, 'es_dueno': es_dueno, 'tipo_usuario': tipo_usuario})
 
+
+
+@login_required
 def detalle_img_mascota(request, imagen_id):
     imagen = get_object_or_404(GaleriaMascota, id=imagen_id)
     form = ComentarioForm()
@@ -175,23 +228,6 @@ def detalle_img_mascota(request, imagen_id):
     return render(request, 'redsocial/detalle_foto.html', {'imagen': imagen, 'comentarios': comentarios, 'form': form, 'tipo_usuario': tipo_usuario})
 
 
-
-def publicar_mensaje_mascota(request, mascota_id):
-    receptor = Mascota.objects.get(id=mascota_id)  
-    
-    if request.method == 'POST':
-        form = MensajeForm(request.POST)
-        if form.is_valid():
-            nuevo_mensaje = form.save(commit=False)
-            nuevo_mensaje.emisor = request.user
-            nuevo_mensaje.receptor = receptor  
-            nuevo_mensaje.save()
-            return redirect('publicar_mensaje', mascota_id=mascota_id) 
-    else:
-        form = MensajeForm()
-
-    mensajes = Mensaje.objects.filter(receptor=receptor) 
-    return render(request, 'redsocial/mensaje.html', {'form': form, 'mensajes': mensajes, 'mascota_id': mascota_id})
 
 '''def publicar_mensaje_usuario(request, receptor_id):
     receptor = get_object_or_404(DuenoMascota, id=receptor_id)

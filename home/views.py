@@ -13,3 +13,8 @@ def home(request):
             tipo_usuario = None
 
     return render(request, 'home/home.html', {'tipo_usuario': tipo_usuario})
+
+
+
+def pagina_no_encontrada(request, exception):
+    return render(request, '404.html', status=404)

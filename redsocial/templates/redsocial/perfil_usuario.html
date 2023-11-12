@@ -3,32 +3,49 @@
 {% block content %}
 <div class="container mt-4">
     <h1 class="text-center">{{ perfil.first_name }} {{ perfil.last_name }}</h1>
+
+    <div style="padding: 10px;">
+        <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
+        <a href="{% url 'mi_perfil' %}" class="btn btn-success">Mi Perfil</a>
+        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
+        
+        
+        
+    </div>
+
     <div class="row">
         <div class="col-md-4">
             <div class="card">
                 <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title">Información del Usuario</h5>
+                    <h5 class="card-title">
+                        Información del Usuario Seleccionado
+                    </h5>
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
                                 <th scope="row">Nombre de usuario:</th>
-                                <td>{{ user_info.username }}</td>
+                                <td>{{ perfil.username }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Correo electrónico:</th>
-                                <td>{{ user_info.email }}</td>
+                                <td>{{ perfil.email }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Fecha de registro:</th>
-                                <td>{{ user_info.date_joined }}</td>
+                                <td>{{ perfil.date_joined }}</td>
                             </tr>
+                            <!-- Agrega otros detalles del usuario seleccionado -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-8">
+            <!-- Formulario para agregar comentarios -->
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
@@ -36,7 +53,8 @@
             </form>
         </div>
     </div>
-    <!-- Aquí puedes agregar el código para mostrar los comentarios -->
+
+    <!-- Lista de comentarios -->
     <div>
         <h3>Comentarios</h3>
         <ul>

@@ -9,6 +9,7 @@ from .models import Mascota , TipoUsuario, Especie, Raza
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -81,6 +82,7 @@ def registro_dueno_mascota(request):
 
 # Vista para seleccionar el tipo de usuario (dueño de mascota o servicio)
 
+@login_required
 def seleccionar_tipo_usuario(request):
     if request.method == 'POST':
         tipo_usuario_form = TipoUsuarioForm(request.POST)
@@ -100,6 +102,7 @@ def seleccionar_tipo_usuario(request):
     return render(request, 'acceso/tipoUsuario.html', {'tipo_usuario_form': tipo_usuario_form})
 
 
+@login_required
 def agregar_mascota(request):
     user = request.user
     tipo_usuario = None
@@ -123,11 +126,13 @@ def agregar_mascota(request):
         
         return render(request, 'acceso/registroMascota.html', {'form': form, 'tipo_usuario': tipo_usuario, 'especies': especies})
 
-
+@login_required
 def obtener_raza(request, especie_id):
     razas = Raza.objects.filter(especie_id=especie_id).values('id', 'nombre')  
     return JsonResponse(list(razas), safe=False)
 
+
+@login_required
 def cerrar_sesion(request):
     logout(request)
     return redirect('home')

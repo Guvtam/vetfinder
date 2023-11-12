@@ -4,8 +4,10 @@ from .forms import BusquedaForm, CalificacionForm, ServicioForm
 from django.views.generic import ListView
 from django.db.models import Q
 from acceso.models import TipoUsuario
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def registrar_servicio(request):
     user = request.user
     tipo_usuario = None

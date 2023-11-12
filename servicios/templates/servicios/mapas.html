@@ -3,9 +3,10 @@
 {% block content %}
     <div id="servicios">
        <br>
+       
         <div id="search-container" >
             <select id="categoryFilter" class="form-control" style="width:30%; margin:auto;">
-                <option value="todos">Selecciona una categoria</option>
+                <option value="todos">Selecciona una Servicio para buscar</option>
                 <option value="Veterinaria">Veterinaria</option>
                 <option value="Cuidado Dental Mascotas">Cuidado Dental Mascotas</option>
                 <option value="Servicios de Emergencia Mascotas">Servicios de Emergencia Mascotas</option>
@@ -19,6 +20,7 @@
             <br>
             <div class="text-center">
                 {% if request.user.is_authenticated %}
+                    <input type="text" id="locationInput" class="form-control" placeholder="Ingresa una ubicación (opcional)" style="width:30%; margin:auto;">
                     <button id="searchButton" class="btn btn-primary">Buscar</button>
                 {% else %}
                     <p class="text-center" style="width: 50%; margin:auto; background-color:rgb(253, 212, 212);">
@@ -137,11 +139,32 @@
             }
 
             // Llama a la función de búsqueda y agrega marcadores
-            document.getElementById('searchButton').addEventListener('click', function () {
-                const category = document.getElementById('categoryFilter').value;
-                searchServices(category);
-            });
-        }
+         //   document.getElementById('searchButton').addEventListener('click', function () {
+          //      const category = document.getElementById('categoryFilter').value;
+          //      searchServices(category);
+          //  });
+          
+        document.getElementById('searchButton').addEventListener('click', function () {
+            const category = document.getElementById('categoryFilter').value;
+            const locationInput = document.getElementById('locationInput').value;
+
+            if (locationInput) {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: locationInput }, function (results, status) {
+                    if (status === 'OK') {
+                        const location = results[0].geometry.location;
+                        searchServices(category, location);
+                    } else {
+                        alert('No se pudo encontrar la ubicación ingresada');
+                    }
+                });
+            } else {
+                searchServices(category, map.getCenter());
+            }
+        });
+    }
+
+        
 
         // Llama a la función initMap al cargar la página
         window.onload = initMap;
@@ -149,3 +172,4 @@
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLCU8Shs5h8VnWJasaLlTogR0gWJ7OYVM&libraries=places"></script>
 {% endblock %}
+
