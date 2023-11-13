@@ -1,54 +1,57 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<div>
-    <h1 class="text-center">
-       {{ perfil.nombre }}
-    </h1>
-    <div style="padding:10px;">
-        {% if user.is_authenticated and user == perfil.dueno %}
-            <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
-            {% endif %}
-
-        <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
-        <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
+    <body style="background-color:rgb(115, 216, 241);">
+        <div class="container mt-4">
+            <h1 class="text-center">{{ perfil.nombre }}</h1>
         
-        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
-        
-        {% if user.is_authenticated and user == perfil.dueno %}
-            <a href="#" class="btn btn-warning">Ficha Clínica</a>
-        {% endif %}
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card" style="width: 18rem;">
-            <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="imagen-redonda">
-            <div class="card-body">
-                <h5 class="card-title">{{ perfil.nombre }}</h5>
-                <p class="card-text">Especie: {{ perfil.especie }}</p>
-                <p class="card-text">Raza: {{ perfil.raza }}</p>
-                <p class="card-text">Género: {{ perfil.genero_mascota }}</p>
-                <p class="card-text">Color: {{ perfil.color }}</p>
+            <div style="padding: 10px;">
+                {% if user.is_authenticated and user == perfil.dueno %}
+                    <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
+                {% endif %}
+                <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
+                <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
+                <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
+                {% if user.is_authenticated and user == perfil.dueno %}
+                    <a href="#" class="btn btn-warning">Ficha Clínica</a>
+                {% endif %}
             </div>
-        </div>
-    </div>
-    <div >
         
-            
-               
+            <!-- Imagen de perfil y información en una fila -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="imagen-redonda">
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            
+                            <p class="card-text">Especie: {{ perfil.especie }}</p>
+                            <p class="card-text">Raza: {{ perfil.raza }}</p>
+                            <p class="card-text">Género: {{ perfil.genero_mascota }}</p>
+                            <p class="card-text">Color: {{ perfil.color }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Formulario y Lista de mensajes -->
             <div class="row">
                 <div class="col-md-4">
-                    <!-- Columna para el formulario de envío de mensajes -->
                     <div style="margin-top: 20px;">
                         <h2 class="text-center">Deja tu mensaje</h2>
                         <form method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                            </div>
                         </form>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <!-- Columna para mostrar los mensajes -->
                     <h2 class="text-center">Mensajes Recibidos:</h2>
                     <ul>
                         {% for mensaje in mensajes %}
@@ -59,7 +62,6 @@
                     </ul>
                 </div>
             </div>
-       
-    </div>
-</div>
+        </div>
+    </body>
 {% endblock %}

@@ -1,64 +1,67 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center">Mi Perfil</h1>
-
-    <div style="margin-left:60px;padding:10px;">
-        
-            {% if user.is_authenticated %}
-        {% if user.is_superuser %}
-            <!-- Superusuario puede ver todos los botones -->
-            <a href="{% url 'mi_mascota' %}" class="btn btn-success">Mi Mascota</a>
-            <a href="{% url 'mis_servicios' %}" class="btn btn-success">Mis Servicios</a>
-            <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
-            <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar mis Datos</a>
-        {% elif tipo_usuario == 'dueno' %}
-            <!-- Tipo usuario dueno no puede ver el botón 'Mis Servicios' -->
-            <a href="{% url 'mi_mascota' %}" class="btn btn-success">Mi Mascota</a>
-            <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
-            <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar mis Datos</a>
-        {% elif tipo_usuario == 'servicios' %}
-            <!-- Tipo usuario servicio no puede ver el botón 'Mi Mascota' -->
-            <a href="{% url 'mis_servicios' %}" class="btn btn-success">Mis Servicios</a>
-            <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
-            <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar mis Datos</a>
-        {% endif %}
-    {% endif %}
-
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-4 text-center">
-            {% if user.imagen_perfil %}
-            <img src="{{ user.imagen_perfil.url }}" alt="Imagen de perfil" width="150" id="imagen-perfil" class="img-thumbnail">
-            {% endif %}
-        </div>
-        <div class="col-md-6">
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Nombre de Usuario:</strong> {{ user.username }}</li>
-                <li class="list-group-item"><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</li>
-                <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ user.email }}</li>
-                <li class="list-group-item"><strong>Teléfono:</strong> {{ user.telefono }}</li>
-                <li class="list-group-item"><strong>Dirección:</strong> {{ user.direccion }}</li>
-                <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> {{ user.fechaNac }}</li>
-                <li class="list-group-item"><strong>Género:</strong> {{ user.genero }}</li>
-            </ul>
+        <body style="background-color:rgb(115, 216, 241);">
             
+            <div class="container mt-5">
+                <h1 class="text-center">Mi Perfil</h1>
             
-        </div>
-    </div>
-
-    <div>
-        <h3>Comentarios:</h3>
-        <ul>
-            {% for comentario in comentarios %}
-                <li>
-                    <strong>{{ comentario.emisor.username }}:</strong> {{ comentario.contenido }}
-                </li>
-            {% empty %}
-                <li>No hay comentarios aún.</li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+                <div style="margin-left:60px;padding:10px;">
+                    
+                        {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <!-- Superusuario puede ver todos los botones -->
+                        <a href="{% url 'mi_mascota' %}" class="btn btn-success">Mi Mascota</a>
+                        <a href="{% url 'mis_servicios' %}" class="btn btn-success">Mis Servicios</a>
+                        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar mis Datos</a>
+                    {% elif tipo_usuario == 'dueno' %}
+                        <!-- Tipo usuario dueno no puede ver el botón 'Mis Servicios' -->
+                        <a href="{% url 'mi_mascota' %}" class="btn btn-success">Mi Mascota</a>
+                        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar mis Datos</a>
+                    {% elif tipo_usuario == 'servicios' %}
+                        <!-- Tipo usuario servicio no puede ver el botón 'Mi Mascota' -->
+                        <a href="{% url 'mis_servicios' %}" class="btn btn-success">Mis Servicios</a>
+                        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar mis Datos</a>
+                    {% endif %}
+                {% endif %}
+            
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 text-center">
+                        {% if user.imagen_perfil %}
+                        <img src="{{ user.imagen_perfil.url }}" alt="Imagen de perfil" width="150" id="imagen-perfil" class="img-thumbnail">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Nombre de Usuario:</strong> {{ user.username }}</li>
+                            <li class="list-group-item"><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</li>
+                            <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ user.email }}</li>
+                            <li class="list-group-item"><strong>Teléfono:</strong> {{ user.telefono }}</li>
+                            <li class="list-group-item"><strong>Dirección:</strong> {{ user.direccion }}</li>
+                            <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> {{ user.fechaNac }}</li>
+                            <li class="list-group-item"><strong>Género:</strong> {{ user.genero }}</li>
+                        </ul>
+                        
+                        
+                    </div>
+                </div>
+            
+                <div>
+                    <h3>Comentarios:</h3>
+                    <ul>
+                        {% for comentario in comentarios %}
+                            <li>
+                                <strong>{{ comentario.emisor.username }}:</strong> {{ comentario.contenido }}
+                            </li>
+                        {% empty %}
+                            <li>No hay comentarios aún.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </body>
 {% endblock %}

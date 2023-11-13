@@ -1,75 +1,83 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="text-center">{{ perfil.first_name }} {{ perfil.last_name }}</h1>
-
-    <div style="padding: 10px;">
-        <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
-        <a href="{% url 'mi_perfil' %}" class="btn btn-success">Mi Perfil</a>
-        <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        Información del Usuario Seleccionado
-                    </h5>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th scope="row">Nombre de usuario:</th>
-                                <td>{{ perfil.username }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Correo electrónico:</th>
-                                <td>{{ perfil.email }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Fecha de registro:</th>
-                                <td>{{ perfil.date_joined }}</td>
-                            </tr>
-                            <!-- Agrega otros detalles del usuario seleccionado -->
-                        </tbody>
-                    </table>
+    <body style="background-color:rgb(115, 216, 241);">
+        <div class="container mt-4" >
+            <h1 class="text-center">{{ perfil.first_name }} {{ perfil.last_name }}</h1>
+        
+            <div style="padding: 10px;">
+                <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
+                <a href="{% url 'mi_perfil' %}" class="btn btn-success">Mi Perfil</a>
+                <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigos</a>
+            </div>
+        
+            <!-- Información del Usuario -->
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Información del Usuario Seleccionado
+                            </h5>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Nombre de usuario:</th>
+                                        <td>{{ perfil.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Correo electrónico:</th>
+                                        <td>{{ perfil.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Fecha de registro:</th>
+                                        <td>{{ perfil.date_joined }}</td>
+                                    </tr>
+                                    <!-- Agrega otros detalles del usuario seleccionado -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <br>
+        
+            <!-- Formulario y Lista de comentarios -->
+            <div class="row ">
+                <div class="col">
+                    <div class="row">
+                        <!-- Formulario para agregar comentarios -->
+                        <div class="col">
+                            <h3>Deja un mensaje a {{perfil.username}}</h3>
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Comentar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Lista de comentarios -->
+                        <div class="col">
+                            <h3>Comentarios</h3>
+                            <ul>
+                                {% for comentario in comentarios %}
+                                {% if comentario.tipo_mensaje == 'Publico' or comentario.emisor == user or comentario.receptor == perfil.dueno or es_dueño_del_perfil %}
+                                    <li>
+                                        <strong>{{ comentario.emisor.username }}:</strong> {{ comentario.contenido }}
+                                    </li>
+                                {% endif %}
+                                {% empty %}
+                                    <li>No hay comentarios aún.</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8">
-            <!-- Formulario para agregar comentarios -->
-            <h3>Deja un mensaje a {{perfil.username}}</h3>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Comentar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Lista de comentarios -->
-<!-- Lista de comentarios -->
-<div>
-    <h3>Comentarios</h3>
-    <ul>
-        {% for comentario in comentarios %}
-        {% if comentario.tipo_mensaje == 'Publico' or comentario.emisor == user or comentario.receptor == perfil.dueno or es_dueño_del_perfil %}
-
-                <li>
-                    <strong>{{ comentario.emisor.username }}:</strong> {{ comentario.contenido }}
-                </li>
-            {% endif %}
-        {% empty %}
-            <li>No hay comentarios aún.</li>
-        {% endfor %}
-    </ul>
-</div>
-
-
-</div>
+    </body>
 {% endblock %}

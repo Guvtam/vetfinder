@@ -43,11 +43,14 @@ def crear_publicacion(request):
 
 
 
+
+
 @login_required
 def buscar_amigo(request):
     form = BusquedaAmigoForm()
     resultados = None
-    tipo_usuario = None  
+    tipo_usuario = None
+
     if request.user.is_authenticated:
         try:
             tipo_usuario_obj = TipoUsuario.objects.get(usuario=request.user)
@@ -59,13 +62,14 @@ def buscar_amigo(request):
         form = BusquedaAmigoForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data.get('query')
-            search_by = form.cleaned_data.get('search_by')  
+            search_by = form.cleaned_data.get('search_by')
 
+            # Traer a ambos tipos de usuarios excepto al superusuario
             if search_by == 'usuario':
                 resultados = DuenoMascota.objects.filter(
                     tipousuario__tipo_usuario='dueno',
                     username__icontains=query
-                )
+                ).exclude(is_superuser=True)
             elif search_by == 'mascota':
                 resultados = Mascota.objects.filter(
                     nombre__icontains=query

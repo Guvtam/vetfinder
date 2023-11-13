@@ -34,10 +34,8 @@ def inicio_sesion(request):
                     return redirect('mi_mascota')
                 elif tipo_usuario == 'servicios':
                     return redirect('mis_servicios')
-                elif tipo_usuario == 'ambos' :
-                    return('mi_perfil')
                 else:
-                    return redirect('home')  # Redirige predeterminadamente
+                    return redirect('mi_perfil')  # Redirige predeterminadamente
 
             else:
                 messages.error(request, 'Credenciales inválidas o usuario desactivado.')
