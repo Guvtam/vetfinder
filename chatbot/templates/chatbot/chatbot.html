@@ -8,6 +8,8 @@
         <p>Aquí puedes interactuar con Chat-GPT para obtener consejos para tu mascota</p>
         {% csrf_token %}
         <input type="text" class="form-control" name="user_input" placeholder="Escribe aquí tu consulta" id="user-input-field">
+        <input type="hidden" name="original_question" value="{{ user_input }}">
+    
         <div class="text-center">
             <button type="submit" class="btn btn-primary mt-3">Enviar</button>
         </div>
@@ -26,8 +28,9 @@
     {% endif %}
 
     {% if response %}
-    <div>
+    <div id="response-chat">
         {{ response|safe }}
+
     </div>
     {% endif %}
 </div>

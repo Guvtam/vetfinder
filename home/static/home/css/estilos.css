@@ -147,6 +147,15 @@
     background-color: #b1a9a9;
 }
 
+#response-chat{
+    width: 35%;
+    padding: 30px;  
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #b1a9a9;
+}
+
 #servicios, #contacto, #tipo-usuario, #detalle{
     background-color: rgb(115, 216, 241);
     margin: 0;
