@@ -25,11 +25,26 @@
     </p>
     {% endif %}
 
+   
+
     {% if response %}
-    <div>
+    <div class="response-box">
         {{ response|safe }}
     </div>
     {% endif %}
 </div>
+<br>
+<style>
+    .response-box {
+        width: 50%;
+        margin:auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: grey;
+        border-radius:20px;
+        color:white;
+    }
+</style>
 
 {% endblock %}
