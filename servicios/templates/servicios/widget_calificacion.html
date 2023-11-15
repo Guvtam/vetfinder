@@ -1,10 +1,11 @@
 {% if user.is_authenticated %}
     <h2 id="encabezadoFuente">Deja tu Calificación</h2>
-    <form method="post">
+    <form method="post" id="testeo">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Enviar Calificación</button>
     </form>
+    <br>
 {% else %}
     <p>Para calificar y comentar, por favor <a href="{% url 'login' %}">inicia sesión</a>.</p>
 {% endif %}

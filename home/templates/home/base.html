@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" id="test">
 {% load static %}
 
 <head>
@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="{% static '/home/css/estilos.css' %}">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj_b8ElgBESWOc6hvO6bDIGCfaXVDIpiE"></script>
 </head>
+
 <body>
 
   <header class="p-3 text-bg-dark">
@@ -36,8 +37,8 @@
               SERVICIOS
             </a>
             <div class="dropdown-menu" aria-labelledby="serviciosDropdown">
-              <a class="dropdown-item" href="{% url 'mapas' %}">LOCALIZA UN SERVICIO</a>
-              <a class="dropdown-item" href="{% url 'servicios' %}">CONTACTA UN SERVICIO</a>
+              <a class="dropdown-item" href="{% url 'mapas' %}">LOCALIZA TU SERVICIO</a>
+              <a class="dropdown-item" href="{% url 'servicios' %}">ENCUENTRA TU SERVICIO</a>
             </div>
           </li>
 

@@ -14,6 +14,7 @@
             <div class="col-4"></div>
         </div>
         <div style="padding: 10px;">
+            <button class="btn btn-primary" onclick="goBack()">Volver</button>
             {% if user.is_authenticated and user == perfil.dueno %}
             <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
             {% endif %}
@@ -21,16 +22,21 @@
             <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
             <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
             {% if user.is_authenticated and user == perfil.dueno %}
-            <a href="#" class="btn btn-warning disabled">Ficha Clínica</a>
+            <a href="#" class="btn btn-warning">Ficha Clínica</a>
             {% endif %}
+            
         </div>
         <br>
         <!-- Imagen de perfil y información en una fila -->
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 18rem;">
-                    <img id="imagen-mascota" src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}"
+                    {% if perfil.imagen %}
+                    {% if perfil.imagen.url %}
+                    <img id="imagen-mascota" src="{{ perfil.imagen.url }}" alt="MASCOTA NO CUENTA CON FOTO DE PERFIL"
                         class="imagen-redonda">
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-8 mb-4">
@@ -77,4 +83,12 @@
             </div>
         </div>
 </body>
+
+<script>
+
+function goBack() {
+            window.history.back();
+        }
+        
+</script>
 {% endblock %}
