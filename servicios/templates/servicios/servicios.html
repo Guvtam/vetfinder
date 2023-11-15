@@ -2,12 +2,31 @@
 
 
 {% block content %}
-    <div id="servicios">
-        <h1 class="text-center">Servicios para tu mascota</h1>
-        <p class="text-center">Aquí encontrarás los servicios que tu mascota necesita.</p>
-        {% if request.user.is_authenticated %}
-        <!-- Este contenido solo se muestra a usuarios autenticados -->
-        <div class="text-center">
+<br>
+<div id="servicios">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 text-center">
+            <h1 id="encabezadoFuente" class="text-center" style="background-color: lightsteelblue;">Servicios para tu
+                mascota</h1>
+        </div>
+        <div class="col-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
+            <h2 id="encabezadoFuente" style="background-color: lightsteelblue;" class="text-center">Aquí encontrarás los
+                servicios que tu mascota necesita.</h2>
+        </div>
+        <div class="col-2"></div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <!-- Este contenido solo se muestra a usuarios autenticados -->
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 text-center" style="background-color: lightsteelblue;">
             <form method="get" action="{% url 'buscar_servicio' %}">
                 {{ form.query.label_tag }}
                 {{ form.query }}
@@ -19,29 +38,32 @@
             </form>
             <br>
         </div>
-
-        <div class="row">
-            {% for servicio in servicios %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100" style="width: 18rem; margin:auto;">
-                    <a href="{% url 'detalle_servicio' servicio.id %}" style="text-decoration: none; ">
-                        <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ servicio.nombre }}</h5>
-                            <p class="card-text">Dirección: {{ servicio.direccion }}</p>
-                            <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
-                            <p class="card-text">Horario: {{ servicio.horario }}</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        {% else %}
-        <!-- Este contenido se muestra a usuarios no autenticados -->
-        <p class="text-center">Por favor, <a href="{% url 'login' %}" >Inicia Sesión</a> para acceder a nuestro todo nuestro contenido.</p>
-        
-        {% endif %}
+        <div class="col-2"></div>
     </div>
+    <br>
+    <div class="row">
+        {% for servicio in servicios %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100" style="width: 18rem; margin:auto; background-color: lightsteelblue;">
+                <a href="{% url 'detalle_servicio' servicio.id %}" style="text-decoration: none; ">
+                    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ servicio.nombre }}</h5>
+                        <p class="card-text">Dirección: {{ servicio.direccion }}</p>
+                        <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
+                        <p class="card-text">Horario: {{ servicio.horario }}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Este contenido se muestra a usuarios no autenticados -->
+    <p class="text-center">Por favor, <a href="{% url 'login' %}">Inicia Sesión</a> para acceder a nuestro todo nuestro
+        contenido.</p>
+
+    {% endif %}
+</div>
 {% endblock %}

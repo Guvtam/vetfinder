@@ -6,8 +6,10 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
 #titulo {
@@ -19,31 +21,35 @@
     text-align: left;
 }
 
-#parrafo-index{
+#parrafo-index {
     color: black;
     font-size: 30px;
     text-align: left;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-#botones-index{
-    font-size: 24px; /* Tamaño de fuente para los botones */
-    margin: 10px; /* Espacio entre los botones */
+#botones-index {
+    font-size: 24px;
+    /* Tamaño de fuente para los botones */
+    margin: 10px;
+    /* Espacio entre los botones */
     text-decoration: none;
 }
 
-#registro{
+#registro {
     background-image: url("../img/mascota_registroUs.jpg");
     margin: 0;
     padding: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
-#form-registro{
+#form-registro {
     width: 40%;
     padding: 30px;
     margin: 20px auto;
@@ -51,146 +57,189 @@
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
     background-color: #b1a9a9;
 }
-#login{
+
+#login {
     background-image: url("../img/mascota_login.jpg");
     margin: 0;
     padding: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
-#login-form{
+#login-form {
     width: 35%;
-    padding: 30px;  
+    padding: 30px;
     margin: 20px auto;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
     background-color: #b1a9a9;
 }
-#mascota-registro{
+
+#mascota-registro {
     background-image: url("../img/mascota_login.jpg");
     margin: 0;
     padding: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
-#form-mascota{
+#form-mascota {
     width: 35%;
-    padding: 30px;  
+    padding: 30px;
     margin: 20px auto;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
     background-color: #b1a9a9;
 }
-#servicio-registro{
+
+#servicio-registro {
     background-image: url("../img/servicio.jpg");
     margin: 0;
     padding: 0;
     background-size: contain;
     background-position: center;
     background-repeat: repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
-#form-servicio{
+#form-servicio {
     width: 35%;
-    padding: 30px;  
+    padding: 30px;
     margin: 20px auto;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
     background-color: #b1a9a9;
 }
-#editar-perfil{
+
+#editar-perfil {
     background-image: url("../img/servicio.jpg");
     margin: 0;
     padding: 0;
     background-size: contain;
     background-position: center;
     background-repeat: repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
-#form-editar-perfil{
+#form-editar-perfil {
     width: 35%;
-    padding: 30px;  
+    padding: 30px;
     margin: 20px auto;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
-    background-color: #b1a9a9;
+    background-color: lightsteelblue;
 }
-#chat{
+
+#chat {
     background-image: url("../img/mascota.jpg");
     margin: 0;
     padding: 0;
     background-size: contain;
     background-position: center;
     background-repeat: repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
 
-#form-chat{
+#form-chat {
     width: 35%;
-    padding: 30px;  
+    padding: 30px;
     margin: 20px auto;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
     background-color: #b1a9a9;
 }
 
-#response-chat{
+#response-chat {
     width: 35%;
-    padding: 30px;  
+    padding: 30px;
     margin: 20px auto;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
     background-color: #b1a9a9;
 }
 
-#servicios, #contacto, #tipo-usuario, #detalle{
-    background-color: rgb(115, 216, 241);
+#servicios,
+#contacto,
+#tipo-usuario,
+#detalle {
     margin: 0;
     padding: 0;
     background-size: cover;
     background-position: center;
     background-repeat: repeat;
-    min-height: 80vh; /* Cambia 'height' a 'min-height' */
-    position: relative; /* Agrega 'position: relative;' */
+    min-height: 80vh;
+    /* Cambia 'height' a 'min-height' */
+    position: relative;
+    /* Agrega 'position: relative;' */
 }
-#calificacion{
+
+#tipo-usuario {
+    background-image: url("../img/animalitos.avif");
+}
+
+#fondo {
+    background-image: url("../img/fondoMisMascotas.jpg");
+}
+
+#calificacion {
     width: 70%;
     margin: auto;
 }
+
 #imagen-perfil {
-    width: 150px; /* Ancho inicial de la imagen */
+    height: 200px;
+    width: 200px;
+    /* Ancho inicial de la imagen */
+}
+
+#imagen-mascota {
+    height: 350px;
+    width: 100%;
+    /* Ancho inicial de la imagen */
 }
 
 /* Escalar la imagen al pasar el cursor sobre ella */
 #imagen-perfil:hover {
-    transform: scale(1.9); /* Escala la imagen al 120% */
-    transition: transform 0.3s; /* Agrega la transición en el hover */
+    transform: scale(1.9);
+    /* Escala la imagen al 120% */
+    transition: transform 0.3s;
+    /* Agrega la transición en el hover */
 }
+
 #amigos {
-    width: 250px; /* Ancho inicial de la imagen */
+    width: 250px;
+    /* Ancho inicial de la imagen */
 }
 
 /* Escalar la imagen al pasar el cursor sobre ella */
 #amigos:hover {
-    transform: scale(1.9); /* Escala la imagen al 120% */
-    transition: transform 0.3s; /* Agrega la transición en el hover */
+    transform: scale(1.9);
+    /* Escala la imagen al 120% */
+    transition: transform 0.3s;
+    /* Agrega la transición en el hover */
 }
 
 #footer {
-    
+
     bottom: 0;
     width: 100%;
     background-color: #333;
@@ -201,9 +250,20 @@
 
 
 .img-zoom {
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
 }
 
 .img-zoom:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
+}
+
+#encabezadoFuente {
+    font-family: math
+}
+
+#marginText {
+    color: #000;
+    font-weight: 700;
+    margin: 0;
+    padding-left: 10px;
 }

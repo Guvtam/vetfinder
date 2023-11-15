@@ -3,7 +3,7 @@
 {% block content %}
 <div id="editar-servicio">
     <div class="container mt-5" id="form-editar-perfil">
-        <h1 class="text-center">Editar Mascota</h1>
+        <h1  id="encabezadoFuente" class="text-center">Editar Mascota</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% if mascota.imagen %}

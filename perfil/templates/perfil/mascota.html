@@ -2,37 +2,54 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center">Mis Mascotas</h1>
+    <br>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 text-center">
+        <h1 id="encabezadoFuente" class="text-center"
+            style="background-color: lightsteelblue;">Mis Mascotas</h1>
+        </div>
+        <div class="col-4"></div>
+    </div>
     <div style="padding:10px;">
         <a href="{% url 'agregar_mascota' %}" class="btn btn-warning">Registrar Nueva Mascota</a>
         <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
-    
-       
+
+
     </div>
     <div class="row">
         {% for mascota in mascotas %}
-        <div class="col-md-6">
+        <div class="col-3"
+            style="padding: 10px; background-color: lightsteelblue; border-radius: 10%; margin-left: 60px; margin-top: 20px; padding: 0;">
+            <h3 class="text-center" id="encabezadoFuente" style="text-transform: capitalize;"> {{ mascota.nombre }}</h3>
+            <br>
             <div class="text-center">
                 {% if mascota.imagen %}
-                <img src="{{ mascota.imagen.url }}" id="imagen-perfil" alt="{{ mascota.nombre }}" style="border-radius: 50%; max-width: 200px;">
+                <img src="{{ mascota.imagen.url }}" id="imagen-perfil" alt="{{ mascota.nombre }}"
+                    style="border-radius: 50%; max-width: 200px;">
                 {% else %}
                 <p>Esta mascota no tiene una imagen registrada.</p>
                 {% endif %}
             </div>
+            <br>
             <div class="row">
                 <div class="col-md-12">
-                    <h3> {{ mascota.nombre }}</h3>
-                    <p>Especie: {{ mascota.especie }}</p>
-                    <p>Raza: {{ mascota.raza }}</p>
-                    <p>Fecha de Nacimiento: {% if mascota.fecha_nacimiento_mascota %} {{ mascota.fecha_nacimiento_mascota|date:"d/m/Y" }} {% else %} Desconocida {% endif %}</p>
-                    <p>Género: {{ mascota.genero_mascota }}</p>
-                    <p>Color: {{ mascota.color }}</p>
-                    <a href="{% url 'editar_mascota' mascota.id %}" class="btn btn-warning">Editar</a>
+                    <p id="marginText">Especie: {{ mascota.especie }}</p>
+                    <p id="marginText">Raza: {{ mascota.raza }}</p>
+                    <p id="marginText">Fecha de Nacimiento: {% if mascota.fecha_nacimiento_mascota %}
+                        {{mascota.fecha_nacimiento_mascota|date:"d/m/Y" }} {% else %} Desconocida {% endif %}</p>
+                    <p id="marginText">Género: {{ mascota.genero_mascota }}</p>
+                    <p id="marginText">Color: {{ mascota.color }}</p>
+                    <br>
+                    <a href="{% url 'editar_mascota' mascota.id %}" class="btn btn-warning"
+                        style="margin-left: 30px;">Editar</a>
                     <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-success">Ver Perfil</a>
                 </div>
             </div>
+            <br>
         </div>
         {% endfor %}
     </div>
 </div>
+<br>
 {% endblock %}

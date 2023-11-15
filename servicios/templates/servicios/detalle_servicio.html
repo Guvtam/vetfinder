@@ -1,48 +1,80 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <div id="detalle">
-        <h1 class="text-center">Detalles del Servicio</h1>
-        <div id="calificacion" style="padding:10px">
-            <a href="{% url 'servicios' %}" class="btn btn-secondary">Volver a la lista de servicios</a>
+<div id="detalle">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 text-center">
+            <h1 id="encabezadoFuente" class="text-center" style="background-color: lightsteelblue;">Detalles del
+                Servicio
+            </h1>
         </div>
+        <div class="col-4"></div>
+    </div>
 
-        <div class="card" style="width: 50%; margin: auto; text-align: center;">
-            <div class="card-image rounded-circle" style="display: inline-block;">
-                <img src="{{ servicio.imagen.url }}" alt="{{ servicio.nombre }}" style="max-width: 100%; max-height: 100%;">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ servicio.nombre }}</h5>
-                <p class="card-text">Categoría: {{ servicio.categoria }}</p>
-                <p class="card-text">Dirección: {{ servicio.direccion }}</p>
-                <p class="card-text">Teléfono: {{ servicio.telefono }}</p>
-                <p class="card-text">Horario: {{ servicio.horario }}</p>
-                <p class="card-text">Descripción: {{ servicio.descripcion }}</p>
-                <p class="card-text">Sitio web: <a href="{{ servicio.sitio_web }}" target="_blank">{{ servicio.sitio_web }}</a></p>
-            </div>
-            <div>
-                <a href="https://wa.me/+56{{ servicio.telefono }}" target="_blank" class="btn btn-success">WhatsApp</a>
-                <a href="tel:{{ servicio.telefono }}" target="_blank" class="btn btn-primary">Llamar</a>
-            </div>
-        </div>
-        
-
-       <div id="calificacion">
-        <h2>Calificaciones y Comentarios</h2>
-        <ul>
-            {% for calificacion in calificaciones %}
-                <li>
-                    <p>Calificación: {{ calificacion.calificacion }}</p>
-                    <p>Comentario: {{ calificacion.comentario }}</p>
-                    <p>Por: {{ calificacion.usuario.username }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-       
-
-        {% include 'servicios/widget_calificacion.html' %}
-  <br>
+    <div id="calificacion" style="padding:10px">
         <a href="{% url 'servicios' %}" class="btn btn-secondary">Volver a la lista de servicios</a>
     </div>
+
+    <div class="card" style="width: 50%; margin: auto; text-align: center; background-color: lightsteelblue;">
+        <div class="card-image rounded-circle" style="display: inline-block;">
+            <img src="{{ servicio.imagen.url }}" alt="{{ servicio.nombre }}" style="max-width: 100%; max-height: 100%;">
+        </div>
+        <div class="card-body">
+            <h5 id="marginText" class="card-title">{{ servicio.nombre }}</h5>
+            <p id="marginText" class="card-text">Categoría: {{ servicio.categoria }}</p>
+            <p id="marginText" class="card-text">Dirección: {{ servicio.direccion }}</p>
+            <p id="marginText" class="card-text">Teléfono: {{ servicio.telefono }}</p>
+            <p id="marginText" class="card-text">Horario: {{ servicio.horario }}</p>
+            <p id="marginText" class="card-text">Descripción: {{ servicio.descripcion }}</p>
+            <p id="marginText" class="card-text">Sitio web: <a href="{{ servicio.sitio_web }}" target="_blank">{{servicio.sitio_web}}</a></p>
+        </div>
+        <div>
+            <a href="https://wa.me/+56{{ servicio.telefono }}" target="_blank" class="btn btn-success">WhatsApp</a>
+            <a href="tel:{{ servicio.telefono }}" target="_blank" class="btn btn-primary">Llamar</a>
+        </div>
+        <br>
+    </div>
+    <br>
+
+    <div id="calificacion" style="background-color: lightsteelblue;">
+        <h2 id="encabezadoFuente">Calificaciones y Comentarios</h2>
+        <ul>
+            {% for calificacion in calificaciones %}
+            <li>
+                <p id="marginText">Calificación: <span id="calificacion">{{ calificacion.calificacion }}</span>   <span id="starsContainer"></span></p>
+                <p id="marginText">Comentario: {{ calificacion.comentario }}</p>
+                <p id="marginText">Por: {{ calificacion.usuario.username }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+        {% include 'servicios/widget_calificacion.html' %}
+    </div>
+    <br>
 </div>
+
+<script>
+    var calificacion = document.getElementById('calificacion');
+    var starsContainer = document.getElementById('starsContainer');
+    agregarEstrellas(calificacion, starsContainer);
+    
+    function agregarEstrellas(calificacion, container) {
+        calificacion = Math.max(0, Math.min(5, calificacion));
+        var roundedRating = Math.round(calificacion * 2) / 2;
+        var starsHTML = '';
+        for (var i = 1; i <= 5; i++) {
+            if (i <= roundedRating) {
+                starsHTML += '⭐'; 
+            } else if (i - 0.5 === roundedRating) {
+                starsHTML += '🌟';
+            } else {
+                starsHTML += '☆';
+            }
+        }
+        // Agrega el HTML de las estrellas al contenedor
+        container.innerHTML = starsHTML;
+    }
+</script>
 {% endblock %}

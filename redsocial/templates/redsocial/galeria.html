@@ -1,37 +1,43 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <h1 class="text-center" >Galería de {{ mascota.nombre }}</h1>
-    <div style="padding:10px;">
-        <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-warning">Volver al Perfil</a>
+
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">
+        <h1 id="encabezadoFuente" class="text-center" style="background-color: lightsteelblue;">Galería de {{mascota.nombre|title }}
+        </h1>
     </div>
-    <div class="row">
-        {% for imagen in galeria %}
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <a href="{% url 'detalle_img_mascota' imagen.id %}" style="text-decoration: none; ">
-                    <img class="card-img-top img-zoom" src="{{ imagen.imagen.url }}" alt="{{ imagen.descripcion }}">
-                    <div class="card-body">
-                        <p class="card-text">{{ imagen.descripcion }}</p>
-                    </div>
-                </a>
+    <div class="col-4"></div>
+</div>
+
+<div style="padding:10px;">
+    <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-warning">Volver al Perfil</a>
+</div>
+<div class="row">
+    {% for imagen in galeria %}
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <a href="{% url 'detalle_img_mascota' imagen.id %}" style="text-decoration: none; ">
+                <img class="card-img-top img-zoom" src="{{ imagen.imagen.url }}" alt="{{ imagen.descripcion }}">
+                <div class="card-body">
+                    <p class="card-text">{{ imagen.descripcion }}</p>
                 </div>
-            </div>
-        {% endfor %}
+            </a>
+        </div>
     </div>
+    {% endfor %}
+</div>
 
-    <!-- Agregar un formulario para cargar una nueva imagen (solo si es_dueno es True) -->
-    {% if es_dueno %}
-    <div style="width: 40%;margin:auto;">
-        <h2>Subir nueva imagen</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" name="imagen" class="btn btn-primary">Subir Imagen</button>
-        </form>
-    </div>
-    {% endif %}
-
-  
-
+<!-- Agregar un formulario para cargar una nueva imagen (solo si es_dueno es True) -->
+{% if es_dueno %}
+<div style="width: 40%;margin:auto;">
+    <h2>Subir nueva imagen</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="imagen" class="btn btn-primary">Subir Imagen</button>
+    </form>
+</div>
+{% endif %}
 {% endblock %}

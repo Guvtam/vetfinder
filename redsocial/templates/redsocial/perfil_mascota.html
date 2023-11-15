@@ -1,67 +1,80 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <body style="background-color:rgb(115, 216, 241);">
-        <div class="container mt-4">
-            <h1 class="text-center">{{ perfil.nombre }}</h1>
-        
-            <div style="padding: 10px;">
-                {% if user.is_authenticated and user == perfil.dueno %}
-                    <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
-                {% endif %}
-                <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
-                <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
-                <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
-                {% if user.is_authenticated and user == perfil.dueno %}
-                    <a href="#" class="btn btn-warning">Ficha Clínica</a>
-                {% endif %}
+
+<body>
+    <div class="container mt-4">
+        <br>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+                <h1 id="encabezadoFuente" style="text-transform: capitalize; background-color: lightsteelblue;"
+                    class="text-center">{{ perfil.nombre }}</h1>
             </div>
-        
-            <!-- Imagen de perfil y información en una fila -->
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}" class="imagen-redonda">
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            
-                            <p class="card-text">Especie: {{ perfil.especie }}</p>
-                            <p class="card-text">Raza: {{ perfil.raza }}</p>
-                            <p class="card-text">Género: {{ perfil.genero_mascota }}</p>
-                            <p class="card-text">Color: {{ perfil.color }}</p>
-                        </div>
-                    </div>
+            <div class="col-4"></div>
+        </div>
+        <div style="padding: 10px;">
+            {% if user.is_authenticated and user == perfil.dueno %}
+            <a href="{% url 'agregar_mascota' %}" class="btn btn-success">Registrar Nueva Mascota</a>
+            {% endif %}
+            <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
+            <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
+            <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
+            {% if user.is_authenticated and user == perfil.dueno %}
+            <a href="#" class="btn btn-warning">Ficha Clínica</a>
+            {% endif %}
+        </div>
+        <br>
+        <!-- Imagen de perfil y información en una fila -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <img id="imagen-mascota" src="{{ perfil.imagen.url }}" alt="{{ perfil.nombre }}"
+                        class="imagen-redonda">
                 </div>
             </div>
-        
-            <!-- Formulario y Lista de mensajes -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div style="margin-top: 20px;">
-                        <h2 class="text-center">Deja tu mensaje</h2>
-                        <form method="post">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
-                            </div>
-                        </form>
+            <div class="col-md-8 mb-4">
+                <div class="card"
+                    style="width: 18rem; padding: 10px; background-color: lightsteelblue; border-radius: 5%;">
+                    <div class="card-body">
+
+                        <p id="marginText" class="card-text">Especie: {{ perfil.especie }}</p>
+                        <p id="marginText" class="card-text">Raza: {{ perfil.raza }}</p>
+                        <p id="marginText" class="card-text">Género: {{ perfil.genero_mascota }}</p>
+                        <p id="marginText" class="card-text">Color: {{ perfil.color }}</p>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <h2 class="text-center">Mensajes Recibidos:</h2>
-                    <ul>
-                        {% for mensaje in mensajes %}
-                            {% if mensaje.tipo_mensaje == 'Publico' or user == mensaje.emisor or user == mensaje.receptor.dueno %}
-                                <li>{{ mensaje.contenido }} - {{ mensaje.emisor }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
                 </div>
             </div>
         </div>
-    </body>
+
+        <!-- Formulario y Lista de mensajes -->
+        <div class="row" style="padding: 10px; background-color: lightsteelblue; border-radius: 5%;">
+            <div class="col-md-4">
+                <h2 style="margin-top: 20px;" class="text-center" id="encabezadoFuente">Deja tu mensaje</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <h2 style="margin-top: 20px;" class="text-center" id="encabezadoFuente">Mensajes Recibidos:</h2>
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-7" style="border: 2px black; background-color: white; border-radius: 5%;">
+                        <ul>
+                            {% for mensaje in mensajes %}
+                            {% if mensaje.tipo_mensaje == 'Publico' or user == mensaje.emisor or user == mensaje.receptor.dueno%}
+                            <li>{{ mensaje.contenido }} - {{ mensaje.emisor }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+</body>
 {% endblock %}

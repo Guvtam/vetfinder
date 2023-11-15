@@ -2,71 +2,86 @@
 
 {% block content %}
 
-    <body style="background-color:rgb(115, 216, 241);">
-        <div class="container" style="width: 80%; margin: auto;">
-            <div class="text-center">
-                <h1>Mi Red Social</h1>
+<body >
+    <br>
+    <div class="container" style="width: 80%; margin: auto;">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+                <h1 id="encabezadoFuente" class="text-center" style="background-color: lightsteelblue;">Mi Red Social
+                </h1>
             </div>
-            
-                <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
-                <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
-           
-            <div style="width: 60%; margin: auto;">
-                <form method="get" action="{% url 'buscar_amigo' %}">
-                    {{ form.query }}
-                    {{ form.search_by }}
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Buscar Amigo</button>
-                    </div>
-                </form>
-            </div>
-    
-            <!-- Agregar la lista de resultados aquí como tarjetas -->
-            <div class="container" style="width: 90%; margin: auto;">
-                {% if resultados %}
-                    <h2>Resultados de la búsqueda:</h2>
-                    <div class="row row-cols-1 row-cols-md-3">
-                        {% if form.search_by.value == 'usuario' %}
-                            {% for usuario in resultados %}
-                                <div class="col mb-4">
-                                    <div class="card h-100" style="width: 18rem;">
-                                        <img src="{{ usuario.imagen_perfil.url }}" alt="{{ usuario.username }}" class="imagen-redonda card-img-top img-fluid" style="height: 200px; object-fit: cover;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ usuario.username }}</h5>
-                                            <p class="card-text mb-0">Nombre: {{ usuario.first_name }} {{ usuario.last_name }}</p>
-                                            <div class="text-center">
-                                                <a href="{% url 'perfil_usuario' usuario.id %}" class="btn btn-warning mt-2">Ver Perfil</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            {# Mostrar datos de mascotas si se busca por nombre de mascota #}
-                            {% for mascota in resultados %}
-                                <div class="col mb-4">
-                                    <div class="card h-100" style="width: 18rem;">
-                                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" class="imagen-redonda card-img-top img-fluid" style="height: 200px; object-fit: cover;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ mascota.nombre }}</h5>
-                                            <p class="card-text mb-0">Especie: {{ mascota.especie }}</p>
-                                            <p class="card-text mb-0">Raza: {{ mascota.raza }}</p>
-                                            <p class="card-text mb-0">Género: {{ mascota.get_genero_mascota_display }}</p>
-                                            <p class="card-text mb-0">Color: {{ mascota.color }}</p>
-                                            <div class="text-center">
-                                                <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-primary mt-2">Ver Perfil</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
+            <div class="col-4"></div>
+        </div>
+
+        <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
+        <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
+
+        <div style="width: 60%; margin: auto;">
+            <form method="get" action="{% url 'buscar_amigo' %}" style="background-color: lightsteelblue; border-radius: 5%;">
+                {{ form.query }}
+                {{ form.search_by }}
+                <br>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Buscar Amigo</button>
+                </div>
+                <br>
+            </form>
+        </div>
+        <br>
+        <!-- Agregar la lista de resultados aquí como tarjetas -->
+        <div class="container" style="width: 90%; margin: auto; background-color: lightsteelblue; border-radius: 5%;">
+            {% if resultados %}
+            <h2 id="encabezadoFuente" style="padding-top: 20px;">Resultados de la búsqueda:</h2>
+            <div class="row row-cols-1 row-cols-md-3">
+                {% if form.search_by.value == 'usuario' %}
+                {% for usuario in resultados %}
+                <div class="col mb-4">
+                    <div class="card h-100" style="width: 18rem;">
+                        {% if usuario.imagen_perfil.url != 'null' %}
+                        <img src="{{ usuario.imagen_perfil.url }}" alt="{{ usuario.username }}"
+                            class="imagen-redonda card-img-top img-fluid" style="height: 200px; object-fit: cover;">
                         {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ usuario.username }}</h5>
+                            <p class="card-text mb-0">Nombre: {{ usuario.first_name }} {{ usuario.last_name }}</p>
+                            <div class="text-center">
+                                <a href="{% url 'perfil_usuario' usuario.id %}" class="btn btn-warning mt-2">Ver
+                                    Perfil</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <p>No se encontraron resultados.</p>
+                {# Mostrar datos de mascotas si se busca por nombre de mascota #}
+                {% for mascota in resultados %}
+                <div class="col mb-4">
+                    <div class="card h-100" style="width: 18rem;">
+                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}"
+                            class="imagen-redonda card-img-top img-fluid" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ mascota.nombre }}</h5>
+                            <p class="card-text mb-0">Especie: {{ mascota.especie }}</p>
+                            <p class="card-text mb-0">Raza: {{ mascota.raza }}</p>
+                            <p class="card-text mb-0">Género: {{ mascota.get_genero_mascota_display }}</p>
+                            <p class="card-text mb-0">Color: {{ mascota.color }}</p>
+                            <div class="text-center">
+                                <a href="{% url 'perfil_mascota' mascota.id %}" class="btn btn-primary mt-2">Ver
+                                    Perfil</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
                 {% endif %}
             </div>
+            {% else %}
+            <p>No se encontraron resultados.</p>
+            {% endif %}
         </div>
-    </body>
+    </div>
+    <br>
+</body>
 
 {% endblock %}

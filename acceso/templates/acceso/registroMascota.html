@@ -3,10 +3,10 @@
 {% block content %}
 <div id="mascota-registro">
     <div class="container" id="form-mascota">
-        <h1 class="text-center">Registra tu Mascota</h1>
+        <h1 id="encabezadoFuente" class="text-center">Registra tu Mascota</h1>
         <form method="post" style="width:70%; margin:auto" enctype="multipart/form-data">
             {% csrf_token %}
-            
+
             <div class="form-group">
                 <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
                 {{ form.nombre }}
@@ -17,7 +17,7 @@
                 <select id="especie" name="especie" class="form-control">
                     <option value="" selected>Selecciona la especie</option>
                     {% for especie in especies %}
-                        <option value="{{ especie.id }}">{{ especie.nombre }}</option>
+                    <option value="{{ especie.id }}">{{ especie.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -27,7 +27,7 @@
                 <select id="raza" name="raza" class="form-control">
                     <option value="" selected>Selecciona la raza</option>
                     {% for raza in razas %}
-                        <option value="{{ raza.id }}">{{ raza.nombre }}</option>
+                    <option value="{{ raza.id }}">{{ raza.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -46,12 +46,12 @@
                 <label for="{{ form.color.id_for_label }}">Color:</label>
                 {{ form.color }}
             </div>
-        
+
             <div class="form-group">
                 <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
                 {{ form.imagen }}
             </div>
-            
+
             <div class="form-group">
                 <label for="{{ form.identificacion.id_for_label }}">Identificación:</label>
                 {{ form.identificacion }}
@@ -69,32 +69,76 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#especie').change(function() {
-        var especieId = $(this).val(); 
+    $(document).ready(function () {
+        $('#especie').change(function () {
+            var especieId = $(this).val();
 
-        $.ajax({
-            url: '/obtener-raza/' + especieId + '/',  
-            type: 'GET',
-            success: function(data) {
-                var razasDropdown = $('#raza');  
+            $.ajax({
+                url: '/obtener-raza/' + especieId + '/',
+                type: 'GET',
+                success: function (data) {
+                    var razasDropdown = $('#raza');
 
-                
-                razasDropdown.empty();
-                razasDropdown.append('<option value="" selected>Selecciona la raza</option>');
 
-                data.forEach(function(raza) {
-                    razasDropdown.append('<option value="' + raza.id + '">' + raza.nombre + '</option>');
-                });
-            },
-            error: function(error) {
-                console.log(error);
+                    razasDropdown.empty();
+                    razasDropdown.append('<option value="" selected>Selecciona la raza</option>');
+
+                    data.forEach(function (raza) {
+                        razasDropdown.append('<option value="' + raza.id + '">' + raza.nombre + '</option>');
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $("#test").submit(function (e) {
+            e.preventDefault(); // Evita que se realice la acción predeterminada del formulario
+
+            // Obtiene los datos del formulario
+            var rut = $("#rut").val();
+            if (!validaRut(rut.replaceAll('.', ''))) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al Procesar',
+                    text: 'Rut ingresado no es valido',
+                    allowOutsideClick: false,
+                })
+                return
             }
         });
     });
-});
+    $(document).ready(function () {
+        $('#rut').on('input blur paste', function () {
+            rut = formatRut($(this).val())
+            $(this).val(rut)
+            if (!validaRut(rut.replaceAll('.', ''))) $('#rut').addClass("is-invalid");
+            else $('#rut').removeClass("is-invalid")
+        })
+    });
+
+    function formatRut(rut) {
+        rut = rut.replace(/[^0-9Kk]/g, '')
+        rut = rut.substring(0, 9)
+        return rut.replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4').toUpperCase()
+    }
+
+    function validaRut(rutCompleto) {
+        if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto)) return false;
+        var digv = rutCompleto.split('-')[1];
+        var rut = rutCompleto.split('-')[0];
+        if (digv == 'K') digv = 'k'
+
+        var M = 0,
+            S = 1;
+        for (; rut; rut = Math.floor(rut / 10))
+            S = (S + rut % 10 * (9 - M++ % 6)) % 11;
+        dv = S ? S - 1 : 'k';
+
+        return (dv == digv);
+    }
 </script>
 {% endblock %}
-
-
-
