@@ -92,19 +92,27 @@ def editar_miperfil(request):
 
 
 
+
 @login_required
 def editar_mascota(request, mascota_id):
     mascota = Mascota.objects.get(id=mascota_id)
+
+    # Obtener las instancias de Especie y Raza asociadas a la mascota
+    especie_instancia = mascota.especie
+    raza_instancia = mascota.raza
 
     if request.method == 'POST':
         form = EditarMascotaForm(request.POST, request.FILES, instance=mascota)
         if form.is_valid():
             form.save()
-            return redirect('mi_mascota')  # Redirige a la página de detalle de mascota o a donde desees
+            return redirect('mi_mascota')
     else:
-        form = EditarMascotaForm(instance=mascota)
+        form = EditarMascotaForm(instance=mascota, initial={'especie': especie_instancia, 'raza': raza_instancia})
+
+    
 
     return render(request, 'perfil/editar_mascota.html', {'form': form, 'mascota': mascota})
+
 
 
 

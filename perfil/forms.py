@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
-from acceso.models import DuenoMascota, Mascota
+from acceso.models import DuenoMascota, Especie, Mascota, Raza
 from servicios.models import Servicio
 
 class EditarPerfilForm(UserChangeForm):
@@ -94,18 +94,19 @@ class EditarServicioForm(forms.ModelForm):
 
 
 
+
 class EditarMascotaForm(forms.ModelForm):
     nombre = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
     )
-    especie = forms.CharField(
-        max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Especie'}),
+    especie = forms.ModelChoiceField(
+        queryset=Especie.objects.all(),  # Agrega el queryset con todas las instancias de Especie
+        widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Especie'}),
     )
-    raza = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Raza'}),
+    raza = forms.ModelChoiceField(
+        queryset=Raza.objects.all(),  # Agrega el queryset con todas las instancias de Raza
+        widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Raza'}),
     )
     fecha_nacimiento_mascota = forms.DateField(
         widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Fecha de Nacimiento'}),

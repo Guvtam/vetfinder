@@ -21,7 +21,7 @@
             <a href="{% url 'galeria_mascota' perfil.id %}" class="btn btn-warning">Galería</a>
             <a href="{% url 'buscar_amigo' %}" class="btn btn-warning">Buscar Amigo</a>
             {% if user.is_authenticated and user == perfil.dueno %}
-            <a href="#" class="btn btn-warning">Ficha Clínica</a>
+            <a href="#" class="btn btn-warning disabled">Ficha Clínica</a>
             {% endif %}
         </div>
         <br>
