@@ -99,12 +99,37 @@ AUTH_USER_MODEL = 'acceso.DuenoMascota'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#conexion a sqlite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#conexion a mysql
+'''DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'vetfinder',
+        'USER': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}'''
+
+#conexion a oracle
+'''DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'xe',
+        'USER': 'c##vetfinder',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '1521',
+    }
+}'''
+
 
 
 # Password validation
