@@ -44,28 +44,28 @@
         <ul>
             {% for calificacion in calificaciones %}
             <li>
-                <p id="marginText">Calificación: <span id="calificacion">{{ calificacion.calificacion }}</span> <span
-                        id="starsContainer"></span></p>
+                <p id="marginText">Calificación: <span class="calificacion">{{ calificacion.calificacion }}</span>
+                    <span class="starsContainer"></span></p>
                 <p id="marginText">Comentario: {{ calificacion.comentario }}</p>
                 <p id="marginText">Por: {{ calificacion.usuario.username }}</p>
             </li>
+            <hr>
             {% endfor %}
         </ul>
-
-
         {% include 'servicios/widget_calificacion.html' %}
     </div>
     <br>
 </div>
 
 <script>
+    // Obtener todos los elementos con la clase 'calificacion' y 'starsContainer'
+    var calificaciones = document.querySelectorAll('.calificacion');
+    var starsContainers = document.querySelectorAll('.starsContainer');
 
-    // document.getElementById('testeo').addEventListener('submit', function (event) {
-    // Prevenir el envío del formulario para que podamos manejarlo con JavaScript
-    //    event.preventDefault();
-    var calificacion = document.getElementById('calificacion');
-    var starsContainer = document.getElementById('starsContainer');
-    agregarEstrellas(calificacion, starsContainer);
+    // Iterar sobre cada comentario y agregar estrellas
+    calificaciones.forEach(function (calificacion, index) {
+        agregarEstrellas(parseFloat(calificacion.innerText), starsContainers[index]);
+    });
 
     function agregarEstrellas(calificacion, container) {
         calificacion = Math.max(0, Math.min(5, calificacion));
@@ -83,6 +83,5 @@
         // Agrega el HTML de las estrellas al contenedor
         container.innerHTML = starsHTML;
     }
-    // });
 </script>
 {% endblock %}
