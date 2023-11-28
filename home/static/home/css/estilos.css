@@ -258,7 +258,8 @@
 }
 
 #encabezadoFuente {
-    font-family: math
+    font-family: math;
+    border-radius: 20px;
 }
 
 #marginText {
