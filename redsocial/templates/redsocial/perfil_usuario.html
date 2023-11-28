@@ -3,8 +3,14 @@
 {% block content %}
     <body>
         <div class="container mt-4" >
-            <h1 class="text-center">{{ perfil.first_name }} {{ perfil.last_name }}</h1>
-        
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6 text-center">
+            <h1 id="encabezadoFuente"  style="background-color: lightsteelblue;" class="text-center">{{ perfil.first_name }} {{ perfil.last_name }}</h1>
+                    </div>
+            <div class="col-3"></div>
+        </div>
             <div style="padding: 10px;">
                 <!-- Enlaces de navegación basados en si el usuario está viendo su propio perfil o no -->
                 <a href="{% url 'mi_perfil' %}" class="btn btn-success">Mi Perfil</a>
@@ -47,7 +53,7 @@
             <!-- Formulario y Lista de comentarios -->
             <div class="row ">
                 <div class="col">
-                    <div class="row">
+                    <div class="row" style="padding: 10px; background-color: lightsteelblue; border-radius: 10px;">
                         <!-- Formulario para agregar comentarios -->
                         <div class="col">
                             <h3>Deja un mensaje a {{perfil.username}}</h3>
