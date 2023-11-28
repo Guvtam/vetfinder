@@ -18,7 +18,7 @@
         <a href="{% url 'mi_perfil' %}" class="btn btn-warning">Mi Perfil</a>
 
         <div style="width: 60%; margin: auto;">
-            <form method="get" action="{% url 'buscar_amigo' %}" style="background-color: lightsteelblue; border-radius: 5%;">
+            <form method="get" action="{% url 'buscar_amigo' %}" style="background-color: lightsteelblue; border-radius: 10px; padding: 10px;">
                 {{ form.query }}
                 {{ form.search_by }}
                 <br>
@@ -30,7 +30,7 @@
         </div>
         <br>
         <!-- Agregar la lista de resultados aquí como tarjetas -->
-        <div class="container" style="width: 90%; margin: auto; background-color: lightsteelblue; border-radius: 5%;">
+        <div class="container" style="width: 90%; margin: auto; background-color: lightsteelblue; border-radius: 10px; padding: 10px;">
             {% if resultados %}
             <h2 id="encabezadoFuente" style="padding-top: 20px;">Resultados de la búsqueda:</h2>
             <div class="row row-cols-1 row-cols-md-3">

@@ -260,6 +260,7 @@
 #encabezadoFuente {
     font-family: math;
     border-radius: 20px;
+    padding: 4px;
 }
 
 #marginText {

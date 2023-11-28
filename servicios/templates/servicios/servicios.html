@@ -26,7 +26,7 @@
     <!-- Este contenido solo se muestra a usuarios autenticados -->
     <div class="row">
         <div class="col-2"></div>
-        <div class="col-8 text-center" style="background-color: lightsteelblue;">
+        <div class="col-8 text-center" style="background-color: lightsteelblue; padding: 5px; border-radius: 10px;">
             <form method="get" action="{% url 'buscar_servicio' %}">
                 {{ form.query.label_tag }}
                 {{ form.query }}
@@ -34,7 +34,7 @@
                 {{ form.categoria }}
                 {{ form.calificacion.label_tag }}
                 {{ form.calificacion }}
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Buscar</button>
             </form>
             <br>
         </div>
